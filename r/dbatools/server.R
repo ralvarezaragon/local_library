@@ -7,9 +7,12 @@ shinyServer(function(input, output, session) {
     # prepare summary data for active connections
     df_summary <- get_summary(df_output)
     df_summary <- filter(df_summary, command == "Query")
-    used_node1 <- ifelse(!is.na(df_summary[1,5]), df_summary[1,5], 0)
-    used_node2 <- ifelse(!is.na(df_summary[2,5]), df_summary[2,5], 0)
-    used_node3 <- ifelse(!is.na(df_summary[3,5]), df_summary[3,5], 0)
+    used_node1 <- as.numeric(ifelse(!is.na(df_summary[1,5]), df_summary[1,5], 0.00))
+    used_node2 <- as.numeric(ifelse(!is.na(df_summary[2,5]), df_summary[2,5], 0.00))
+    used_node3 <- as.numeric(ifelse(!is.na(df_summary[3,5]), df_summary[3,5], 0.00))
+    used_node1 <- round(used_node1, 2)
+    used_node2 <- round(used_node2, 2)
+    used_node3 <- round(used_node3, 2)
     output$rp_title  <- renderText({
       paste("Running processes in", as.character(input$cluster))
     })

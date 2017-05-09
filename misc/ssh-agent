@@ -1,0 +1,6 @@
+$ eval `ssh-agent -s`
+$ ssh-add ~/.ssh/ralvarez_rsa
+$ ssh-add -l
+
+ps aux | grep ssh-agent | grep -v grep
+

@@ -1,7 +1,7 @@
 sidebarMenu(
   menuItem(
     "Running processes", 
-    tabName = "running_processes", 
+    tabName = "rp", 
     icon = icon("dashboard"),
     div(
       style="display:inline-block; width: 70%", 
@@ -12,7 +12,11 @@ sidebarMenu(
       actionButton("rp_run", "Run"), 
       width=1
     ),
-    checkboxInput("rp_sleep", label = "Include sleep connections", value = FALSE)
+    checkboxInput("rp_sleep", label = "Exclude sleep connections", value = TRUE)
   ),
-  menuItem("Widgets", tabName = "widgets", icon = icon("th"))
+  menuItem(
+    "Mysql variables", 
+    tabName = "var", 
+    icon = icon("dollar")
+  )
 )
