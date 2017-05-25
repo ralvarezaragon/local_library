@@ -1,0 +1,103 @@
+library(shinydashboard)
+library(plotly)
+
+dashboardPage(
+	
+	dashboardHeader(
+		title = "streameR"
+	),
+	dashboardSidebar(
+		sidebarMenu(
+			menuItem(
+				"Settings", 
+				tabName = "settings", 
+				icon = icon("dashboard")
+			),
+			menuItem(
+				"Dashboard", 
+				tabName = "dashboard", 
+				icon = icon("th")
+			),			
+			sliderInput("ret", "Retention time (mins)", min = 1, max = 10, value = 2),
+			box(
+				background = "red",				
+				textOutput("err_conn")
+			)
+		)
+	),
+	dashboardBody(
+		#styles		
+		tags$head(
+			tags$link(
+				rel = "stylesheet", 
+				type = "text/css", 
+				href = "style.css"
+			)
+		),
+		tabItems(
+			# settings tab content
+			tabItem(
+				tabName = "settings",				
+				box(
+					title = "Connection source", 
+					background = "black",	
+					width = 2,
+					textInput("hostname", "Hostname", value = "sandbox.hortonworks.com"),	
+					numericInput("port", "Port", value = 2181),				
+					textInput("topic", "Topic", value = "kafka_json"),
+					selectInput(
+						"source_type", 
+						"Data format",
+						width = "220px",
+						choices = c(							
+							"JSON",
+							"XML",
+							"Flat text"
+						),
+						selected = "JSON"
+					),
+					conditionalPanel(
+						condition = "input.source_type == 'Flat text'",
+						textInput("sep_input", "Separator", value = "|")
+					),
+					conditionalPanel(
+						condition = "input.hostname != '' && input.port != ''  && input.topic != ''",
+						actionButton("connect", label = "Connect and get fields")	
+					),					
+					br(),
+					uiOutput("measure_list"),
+					uiOutput("timestamp_list"),
+					uiOutput("dim_list"),					
+					uiOutput("build_plot")					
+				),
+				box(
+					width = 6,
+					valueBoxOutput("valuebox1"),
+					valueBoxOutput("valuebox3"),
+					valueBoxOutput("valuebox2")					
+				)
+			),
+			# dashboard tab content
+			tabItem(
+				tabName = "dashboard",
+				fluidRow(
+					box(
+						plotlyOutput("plot1"), 
+						width = 12
+					)
+				),
+				fluidRow(					
+					box(						
+						tableOutput("table1"),
+						width = 4
+					),
+					box(
+						plotlyOutput("plot2"), 
+						width = 4
+					)						
+				)	
+			)			
+		)	
+	),
+	skin = "blue"
+)

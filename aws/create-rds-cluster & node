@@ -1,0 +1,33 @@
+
+
+
+# Create credentials for users
+mysql -h bbcl-system-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p -e "
+CREATE USER 'dev'@'%' identified by 't347Tmk6';
+GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'dev'@'%';
+CREATE USER 'app'@'%' identified by 'Rwwyf75Z';
+GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'app'@'%';
+CREATE USER 'ro'@'%' identified by 'qHqGsQu2';
+GRANT SELECT ON *.* TO 'ro'@'%';"
+
+
+
+# Create cluster
+aws rds create-db-cluster \
+--availability-zones eu-west-1a \
+--backup-retention-period 1 \
+--db-cluster-identifier bbcl-stats-test \
+--vpc-security-group-ids sg-72ddf314 \
+--engine aurora \
+--master-username admin \
+--master-user-password 5jcKQQkD 
+
+# Launch the db instance
+aws rds create-db-instance \
+--db-instance-identifier bbdb-stats-test-1 \
+--db-cluster-identifier bbcl-stats-test \
+--engine aurora \
+--db-instance-class db.t2.medium \
+--no-multi-az \
+--publicly-accessible \
+--promotion-tier 0 

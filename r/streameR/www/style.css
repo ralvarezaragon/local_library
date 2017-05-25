@@ -1,0 +1,11 @@
+/* connection source */
+#hostname, #topic { 
+	width: 220px; 
+}
+#port, #sep_input { 
+	width: 80px; 
+}
+#err_conn {
+	color: #F2F2F2;
+	font-weight: bold;
+}

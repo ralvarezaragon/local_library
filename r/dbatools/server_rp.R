@@ -31,9 +31,9 @@ organize_data <- function(v_data, host, colname){
     mutate(
       host = host
     ) 
-    
+  
   df_data <- df_data[-1,]
-
+  
   return (df_data)
 }
 
@@ -47,6 +47,7 @@ get_summary <- function(df_data){
     count()
   df_summary = inner_join(subtotals, totals, by = "host") %>%
     mutate(perc = round((n.x/n.y)*100, 2))
+  
   return (df_summary)
 }
 
@@ -87,11 +88,24 @@ run_rp <- function(cluster_no){
   return (df_final)
 }
 
-
+render_rp_table <- function(sleep_option, df){
+  if (sleep_option == TRUE) {
+    df <- filter(df, command != 'Sleep')
+  }
   
+  return (df)
+}
+
+render_rp_infobox <- function(title, value){
+  infoBox(
+    title, paste0(value, "%"), icon = icon("dashboard"),
+    color = "yellow"
+  )
+}  
 
 
 
- 
+
+
 
 

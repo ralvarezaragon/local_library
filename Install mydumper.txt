@@ -1,0 +1,7 @@
+#Clone git repo
+git clone https://github.com/maxbube/mydumper.git
+# Install package dependencies
+apt-get install libglib2.0-dev libmysqlclient-dev zlib1g-dev libpcre3-dev libssl-dev cmake
+# Build the app
+cmake .
+make

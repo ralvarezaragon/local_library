@@ -2,6 +2,7 @@
 library(ssh.utils)
 library(dplyr)
 library(tidyr)
+library(reshape)
 
 get_ssh_result <- function(user, host, command){
   dest <- paste(
@@ -18,7 +19,7 @@ get_ssh_result <- function(user, host, command){
   return(l_result$cmd.out)
 }
 
-organize_data <- function(v_data, host, colname){
+organize_data <- function(v_data, h, colname){
   df_data <- data.frame(
     raw=v_data,
     stringsAsFactors = F
@@ -29,7 +30,7 @@ organize_data <- function(v_data, host, colname){
       sep = "\t"
     ) %>%
     mutate(
-      host = host
+      host = h
     ) 
   
   df_data <- df_data[-1,]
@@ -39,7 +40,7 @@ organize_data <- function(v_data, host, colname){
 
 run_var <- function(cluster_no){
   cluster_no <- as.integer(cluster_no)
-  query <- "show global variables;"
+  query <- "show variables;"
   command <- paste(
     "mysql -e '",
     query,
@@ -61,5 +62,6 @@ run_var <- function(cluster_no){
     df_temp <- organize_data(l_data_var[[i]], l_host[[cluster_no]][i], colname) 
     df_final <- rbind(df_final, df_temp)
   }
+  df_final <- cast(df_final, variable ~ host)
   return (df_final)
 }

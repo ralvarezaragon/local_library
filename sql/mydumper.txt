@@ -1,0 +1,14 @@
+time ./mydumper \
+	--host=10.0.3.5 \
+	--user=admin \
+	--password=wastinglightdearrosemary \
+	--database=esme_identification \
+	--tables-list=devices_by_deviceatlas \
+	--chunk-filesize=100 \
+	--no-locks \
+	--trx-consistency-only \
+	--less-locking  \
+	--use-savepoints \
+	--threads=2 \
+	--verbose=3 \
+	--outputdir='/tmp/output/'
