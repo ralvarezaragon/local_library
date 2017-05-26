@@ -60,6 +60,10 @@ def get_metric(l_metric, metric_req, gauge_obj):
 			metric_value = l_metric["nodes"][i]["memoryFree"]		
 		elif metric_req == "cpu_usage":
 			metric_value = l_metric["nodes"][i]["systemStats"]["cpu_utilization_rate"]	
+		elif metric_req == "hdd_size":
+			metric_value = l_metric["nodes"][i]["interestingStats"]["couch_docs_actual_disk_size"]	
+		elif metric_req == "hdd_used":
+			metric_value = l_metric["nodes"][i]["interestingStats"]["couch_docs_data_size"]			
 		else:
 			metric_value = 0	
 		gauge_obj.labels(node_name).set(metric_value)	
@@ -86,6 +90,8 @@ if __name__ == '__main__':
 	g_mem_total = Gauge("couchbase_node_memory_total_bytes", "couchbase node memory total", ['node'])
 	g_mem_free = Gauge("couchbase_node_memory_free_bytes", "couchbase node memory free", ['node'])
 	g_cpu_usage = Gauge("couchbase_node_cpu_usage", "couchbase node cpu usage", ['node'])
+	g_hdd_size = Gauge("couchbase_node_hdd_size_bytes", "couchbase node hdd size", ['node'])
+	g_hdd_used = Gauge("couchbase_node_hdd_used_bytes", "couchbase node hdd used", ['node'])
 	# Start up the server to expose the metrics.
 	start_http_server(8001)
 	# Generate some requests.
@@ -99,5 +105,7 @@ if __name__ == '__main__':
 		get_metric(result, "mem_total", g_mem_total)
 		get_metric(result, "mem_free", g_mem_free)
 		get_metric(result, "cpu_usage", g_cpu_usage)
+		get_metric(result, "hdd_size", g_hdd_size)
+		get_metric(result, "hdd_used", g_hdd_used)
 		print "{0}::couchbase_node_status:{1}".format(time, cb_url)		
 		sleep(5)
