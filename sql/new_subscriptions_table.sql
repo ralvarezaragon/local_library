@@ -14,9 +14,9 @@
   `signup_datestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
   `unsubscription` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `reminder_stamp` int(11) NOT NULL DEFAULT '0',
-  `service_reminder_stamp` int(11) NOT NULL DEFAULT '0', --keep?
+  `service_reminder_stamp` int(11) NOT NULL DEFAULT '0', 
   `renew_datestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `keyword` char(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL, --keep?
+  `keyword` char(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL, 
   `mtn` int(11) NOT NULL DEFAULT '0',
   `session_value` int(11) NOT NULL DEFAULT '0',
   `session_type` int(11) NOT NULL DEFAULT '0',
@@ -32,10 +32,7 @@
   `bundle` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`subscription_id`),
   UNIQUE KEY `msisdn` (`msisdn`,`company`),
-  KEY `country` (`country`,`monthstamp`,`daystamp`,`keyword`),
+  KEY `country` (`country`,`keyword`),
   KEY `signup` (`signup_datestamp`,`renew_datestamp`),
-  KEY `campaign` (`campaign`),
-  KEY `application` (`application`),
-  KEY `daystamp` (`daystamp`,`campaign`),
   KEY `network` (`network`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68931965 DEFAULT CHARSET=latin1;

@@ -1,4 +1,0 @@
-mysqldump -u admin -pwastinglightdearrosemary esme_identification devices_by_deviceatlas --single-transaction --quick --lock-tables=false > devices_by_deviceatlas.sql
-
-mysql -h 10.0.3.1 -u admin -pwastinglightdearrosemary esme_identification < devices_by_deviceatlas.sql
-

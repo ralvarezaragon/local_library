@@ -3,8 +3,8 @@ time ./mydumper \
 	--user=admin \
 	--password=wastinglightdearrosemary \
 	--database=esme_identification \
-	--tables-list=devices_by_deviceatlas \
-	--chunk-filesize=100 \
+	--tables-list=number_portability \
+	--chunk-filesize=50 \
 	--no-locks \
 	--trx-consistency-only \
 	--less-locking  \
@@ -12,3 +12,5 @@ time ./mydumper \
 	--threads=2 \
 	--verbose=3 \
 	--outputdir='/tmp/output/'
+	
+	

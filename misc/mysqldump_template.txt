@@ -1,0 +1,1 @@
+mysqldump esme_identification reporo_ident --single-transaction --quick --lock-tables=false --no-data > /tmp/sch.sql
