@@ -74,11 +74,9 @@ def get_metric(l_metric, metric_req, gauge_obj, cluster_name):
 
 if __name__ == '__main__':
   # setup cb cluster API
-	cb_url_w = "http://w1.basebone.com:8091/pools/default/"
-	cb_url_m = "http://m2.basebone.com:8091/pools/default/"
+	cb_url_w = "http://w1.basebone.com:8091/pools/default/"	
 	# Start up the server to expose the metrics.
-	start_http_server(8001)
-	
+	start_http_server(8001)	
 	# build the metrics
 	g_status = Gauge("couchbase_node_status", "couchbase node status", ['cluster', 'node'])
 	g_membership = Gauge("couchbase_cluster_membership", "couchbase cluster membership", ['cluster','node'])
@@ -100,16 +98,6 @@ if __name__ == '__main__':
 		get_metric(result, "mem_free", g_mem_free, "w1")
 		get_metric(result, "cpu_usage", g_cpu_usage, "w1")
 		get_metric(result, "hdd_size", g_hdd_size, "w1")
-		get_metric(result, "hdd_used", g_hdd_used, "w1")
-		# open csv for metric extraction
-		result = get_json_data(cb_url_m)		
-		get_metric(result, "status", g_status, "m1")
-		get_metric(result, "membership", g_membership, "m1")		
-		get_metric(result, "mem_total", g_mem_total, "m1")
-		get_metric(result, "mem_free", g_mem_free, "m1")
-		get_metric(result, "cpu_usage", g_cpu_usage, "m1")
-		get_metric(result, "hdd_size", g_hdd_size, "m1")
-		get_metric(result, "hdd_used", g_hdd_used, "m1")
-		print "{0}::couchbase_node_status:{1}".format(time, cb_url_w1)
-		print "{0}::couchbase_node_status:{1}".format(time, cb_url_m1)		
+		get_metric(result, "hdd_used", g_hdd_used, "w1")		
+		print "{0}::couchbase_node_status:{1}".format(time, cb_url_w)		
 		sleep(5)
