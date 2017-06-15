@@ -16,7 +16,6 @@ def parse_json(config_file):
 def open_mysql_conn(conn_array):
   new_conn = MySQLdb.connect(
     host=conn_array["host"],
-    port=conn_array["port"],
     user=conn_array["user"],
     passwd=conn_array["pwd"],
     db="mysql"
