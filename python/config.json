@@ -41,8 +41,7 @@
 			"pwd":"inyourhonorbestofyou"
 		},
 		"hopper_admin":{
-			"host":"127.0.0.1",
-			"port":3316,
+			"host":"10.0.3.1",
 			"user":"admin",
 			"pwd":"wastinglightdearrosemary"
 		},
