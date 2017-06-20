@@ -74,7 +74,7 @@ def get_metric(l_metric, metric_req, gauge_obj, cluster_name):
 
 if __name__ == '__main__':
   # setup cb cluster API
-	cb_url_w = "http://w1.basebone.com:8091/pools/default/"	
+	cb_url_w = "http://w2.basebone.com:8091/pools/default/"	
 	# Start up the server to expose the metrics.
 	start_http_server(8001)	
 	# build the metrics

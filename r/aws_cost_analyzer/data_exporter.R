@@ -72,7 +72,7 @@ fix_datatypes <- function(df){
 main <- function(){
   aws_folder <- "/tmp/aws_out/"
   # Download the files and remove the json files
-  #download_from_s3(aws_folder)
+  download_from_s3(aws_folder)
   # Extract teh gz files and create a vector with csv files path
   v_file <- extract_csv_data(aws_folder)
   # Create the df using each file

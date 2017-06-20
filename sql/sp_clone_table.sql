@@ -28,7 +28,7 @@ proc_label:BEGIN
   DEALLOCATE PREPARE stmt;
   
   IF (@row_count > 100000) then		
-    SELECT "The table contains too many rows. Alter aborted" as 'OUTPUT MESSAGE';
+    SELECT "The table contains too many rows. Clonation aborted" as 'OUTPUT MESSAGE';
     LEAVE proc_label;	
   END IF;
   -- If it's smaller than 100k rows then clone the structure
