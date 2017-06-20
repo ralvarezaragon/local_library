@@ -1,9 +1,9 @@
-time ./mydumper \
+time ./mydumper/mydumper \
 	--host=10.0.3.1 \
 	--user=admin \
 	--password=wastinglightdearrosemary \
 	--database=esme_apps \
-	--tables-list=mesh_belgium \
+	--tables-list=mesh_netherlands \
 	--chunk-filesize=50 \
 	--no-locks \
 	--trx-consistency-only \
@@ -11,5 +11,5 @@ time ./mydumper \
 	--use-savepoints \
 	--threads=2 \
 	--verbose=3 \
-	--outputdir='/tmp/output_be'
+	--outputdir='/tmp/output_nl'
 

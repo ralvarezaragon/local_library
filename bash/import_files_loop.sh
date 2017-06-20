@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-
-case ${opts} in
-  h)
-    host=${OPTARG};;
-  d)
-    dbname=${OPTARG};;
-  f)
-    folder=${OPTARG};;
-  s)
-    sleep=${OPTARG};
-esac
+#./import_files_loop.sh -h=10.0.3.1 -d=users_ralvarez -f=/tmp/output_test -s=2
+while getopts h:d:f:s: opts; do
+  case ${opts} in
+    h)
+      host=${OPTARG};;
+    d)
+      dbname=${OPTARG};;
+    f)
+      folder=${OPTARG};;
+    s)
+      sleep=${OPTARG};
+  esac
+done
 
 for file in /tmp/${folder}/*.sql; do
   echo "Importing ${file} ..."
