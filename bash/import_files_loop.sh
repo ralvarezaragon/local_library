@@ -7,6 +7,8 @@ case ${opts} in
     dbname=${OPTARG};;
   f)
     folder=${OPTARG};;
+  s)
+    sleep=${OPTARG};
 esac
 
 for file in /tmp/${folder}/*.sql; do
@@ -14,6 +16,6 @@ for file in /tmp/${folder}/*.sql; do
   #time mysql -h ${host} ${dbname} < $file
   echo "mysqli -h ${host} ${dbname} < $file"
   #rm $file
-  sleep 10s;
+  sleep ${sleep}s;
   echo "done!"
 done  
