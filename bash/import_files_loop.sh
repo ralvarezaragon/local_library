@@ -17,5 +17,5 @@ for file in /tmp/${folder}/*.sql; do
   echo "Importing ${file} ..."
   time mysql -h ${host} ${dbname} < $file  &&  mv "${file}" "${file}.imp"
   sleep ${sleep}s;
-  echo "done!"
-done  
+done
+echo "done"
