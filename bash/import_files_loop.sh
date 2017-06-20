@@ -16,6 +16,6 @@ for file in /tmp/${folder}/*.sql; do
   #time mysql -h ${host} ${dbname} < $file
   echo "mysqli -h ${host} ${dbname} < $file"
   #rm $file
-  sleep ${sleep}s;
+  #sleep ${sleep}s;
   echo "done!"
 done  

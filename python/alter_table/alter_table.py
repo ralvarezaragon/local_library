@@ -1,4 +1,7 @@
 #!/usr/bin/python
+
+#python alter_table.py --cluster=hopper --db=esme_helpdesk --table=refunds
+
 import MySQLdb
 import json
 import logging

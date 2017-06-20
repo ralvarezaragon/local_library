@@ -2,10 +2,8 @@
   "remove":[          
   ],
   "add":[
-    "`testfield` int(11) NOT NULL DEFAULT 0",
-    "`lala` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT 'blah'"    
+    "`deleted` TINYINT NOT NULL DEFAULT '0'"      
   ],
   "change":[
-    "`title` varchar(300) NOT NULL DEFAULT 'unknown'"
   ]
 }
