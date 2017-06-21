@@ -27,18 +27,18 @@
 		},
 		"hopper":{
 			"host":"10.0.3.1",
-			"user":"ro",
-			"pwd":"inyourhonorbestofyou"
+			"user":"admin",
+			"pwd":"wastinglightdearrosemary"
 		},
 		"stats":{
 			"host":"10.0.3.5",
-			"user":"ro",
-			"pwd":"inyourhonorbestofyou"
+			"user":"admin",
+			"pwd":"wastinglightdearrosemary"
 		},
 		"frank":{
 			"host":"10.0.3.7",
-			"user":"ro",
-			"pwd":"inyourhonorbestofyou"
+			"user":"admin",
+			"pwd":"wastinglightdearrosemary"
 		},
 		"hopper_admin":{
 			"host":"10.0.3.1",
