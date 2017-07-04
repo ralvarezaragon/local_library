@@ -1,0 +1,30 @@
+############################################################
+# Composer file for frank services
+# Total host resources: 8CPUs / 64 Gb RAM
+############################################################
+version: '3.1'
+services:
+  bb-db-products-prod:    
+    container_name: bb-db-products-prod		
+    build:
+      context: .
+      dockerfile: /opt/docker-env/dockerfiles/bb-pxc57/Dockerfile			
+    deploy:
+      mode: replicated
+      replicas: 1
+			restart_policy:
+        condition: none
+      resources:
+      limits:
+        cpus: "2.0"
+        memory: 8000M	    
+		update_config:
+      parallelism: 1
+      delay: 1h    
+		volumes:
+       - /opt/mysql-data/bb-db-products-prod-1/:/var/lib/mysql        
+		restart: "no"        
+		ports:
+      - "3301:3306"    
+		networks:
+      - bb-network-prod

@@ -1,0 +1,84 @@
+# Preparations
+apt-get install sysbench
+mysql -e "create database testdb"
+
+# Run all this code in /tmp/
+##############################################
+# CPU
+# Look at: total time: 23.8724s
+##############################################
+sysbench --test=cpu --cpu-max-prime=20000 run
+##############################################
+# RAM
+# Look at: 102400.00 MB transferred (2265.68 MB/sec)
+##############################################
+sysbench --test=memory --num-threads=8 run
+#############################################################################################
+# Filesystem tests
+# Look at: Read 9.375Mb  Written 6.25Mb  Total transferred 15.625Mb  (53.316Kb/sec)
+#############################################################################################
+sysbench --num-threads=8 --test=fileio --file-total-size=10G --file-test-mode=rndrw prepare
+sysbench --num-threads=8 --test=fileio --file-total-size=10G --file-test-mode=rndrw run
+sysbench --num-threads=8 --test=fileio --file-total-size=10G --file-test-mode=rndrw cleanup
+###########################################################################################################################################
+# MySQL
+# Look at: transactions: 160990 (2683.06 per sec.)
+############################################################################################################################################
+
+sysbench /usr/share/sysbench/tests/include/oltp_legacy/oltp.lua \
+--oltp-table-size=1000000 \
+--db-driver=mysql \
+--mysql-host=10.0.3.24 \
+--mysql-db=testdb \
+--mysql-user=admin \
+--mysql-password=wastinglightdearrosemary \
+prepare        
+          
+sysbench /usr/share/sysbench/tests/include/oltp_legacy/oltp.lua \
+--oltp-table-size=1000000 \
+--db-driver=mysql \
+--mysql-host=10.0.3.24 \
+--mysql-db=testdb \
+--mysql-user=admin \
+--mysql-password=wastinglightdearrosemary \
+--oltp-read-only=off \
+--max-requests=0 \
+--threads=8 \
+run
+
+sysbench /usr/share/sysbench/tests/include/oltp_legacy/oltp.lua \
+--db-driver=mysql \
+--mysql-host=10.0.3.24 \
+--mysql-db=testdb \
+--mysql-user=admin \
+--mysql-password=wastinglightdearrosemary \
+cleanup
+
+sysbench /usr/share/sysbench/tests/include/oltp_legacy/delete.lua \
+--oltp-table-size=1000000 \
+--db-driver=mysql \
+--mysql-host=10.0.3.24 \
+--mysql-db=testdb \
+--mysql-user=admin \
+--mysql-password=wastinglightdearrosemary \
+prepare        
+          
+sysbench /usr/share/sysbench/tests/include/oltp_legacy/oltp_simple.lua \
+--oltp-table-size=1000000 \
+--db-driver=mysql \
+--mysql-host=10.0.3.24 \
+--mysql-db=testdb \
+--mysql-user=admin \
+--mysql-password=wastinglightdearrosemary \
+--oltp-read-only=off \
+--max-requests=0 \
+--threads=8 \
+run
+
+sysbench /usr/share/sysbench/tests/include/oltp_legacy/delete.lua \
+--db-driver=mysql \
+--mysql-host=10.0.3.24 \
+--mysql-db=testdb \
+--mysql-user=admin \
+--mysql-password=wastinglightdearrosemary \
+cleanup

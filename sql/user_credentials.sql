@@ -39,9 +39,15 @@ GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'cron'@'10.0.%';
 CREATE USER 'cron_admin'@'10.0.%' IDENTIFIED BY 'password';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE,DROP,ALTER ON *.* TO 'cron_admin'@'10.0.%';
 
+## BKP
+CREATE USER 'sst'@'localhost' IDENTIFIED BY 'passwrod';
+CREATE USER 'sst'@'10.0.%' IDENTIFIED BY 'passwrod';
+GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'sst'@'localhost';
+GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'sst'@'10.0.%';
+
 ################
 # SYS ACCOUNTS #
 ################
 clustercheckuser
 debian-sys-maint (fix password)
-percona-agent=
+percona-agent

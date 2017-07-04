@@ -1,0 +1,9 @@
+ETCD_NAME=bb-db-product-prod-1
+ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
+ETCD_LISTEN_PEER_URLS="http://0.0.0.0:2380"
+ETCD_LISTEN_CLIENT_URLS="http://0.0.0.0:2379"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://100.0.0.10:2380"
+ETCD_INITIAL_CLUSTER="bb-db-product-prod-1=http://100.0.0.10:2380,bb-db-product-prod-2=http://100.0.0.11:2380,bb-db-product-prod-3=http://100.0.0.12:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="bb-cl-products-prod"
+ETCD_ADVERTISE_CLIENT_URLS="http://0.0.0.0:2379"

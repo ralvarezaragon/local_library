@@ -1,0 +1,34 @@
+############################################################
+# Dockerfile to build PxC 57 container images
+# Based on Ubuntu
+# This file must be saved as Dockerfile
+# Suggested structure bb-pxc57/Dockerfile
+# To build the image: docker build -t bb-pxc57 bb-pxc57/Dockerfile
+############################################################
+# Set the base image to Ubuntu
+FROM ubuntu:16.04
+# File Author / Maintainer
+MAINTAINER Rafa Alvarez
+
+RUN groupadd -r mysql && useradd -r -g mysql mysql
+RUN mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql
+
+# Fix apt-utils error line
+ENV DEBIAN_FRONTEND noninteractive
+
+# Install basic packages and tools
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install --assume-yes apt-utils
+RUN apt-get install -y python-software-properties vim wget curl netcat
+
+ADD mycnf_template /etc/mysql/my.cnf
+
+# Percona 
+RUN wget https://repo.percona.com/apt/percona-release_0.1-4.xenial_all.deb
+RUN dpkg -i percona-release_0.1-4.xenial_all.deb
+RUN apt-get update
+RUN apt-get install -y percona-xtradb-cluster-57
+RUN rm -r /var/lib/mysql/*
+RUN su mysql bash -c 'mysqld --initialize'
+RUN chown -R mysql:mysql /var/lib/mysql/
+RUN chown mysql:mysql /etc/mysql/my.cnf

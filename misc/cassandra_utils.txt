@@ -1,0 +1,23 @@
+# To check the cluster status
+nodetool status
+--  Address    Load       Tokens       Owns (effective)  Host ID                               Rack
+
+# Get stats about how the cluster performs
+proxy histograms
+
+
+
+
+
+#cqlsh 10.02.11 >>
+  # Get keysapces (DBs) list
+  DESCRIBE keyspaces;
+  # Get column family (table) for a given keyspace;
+  DESCRIBE DESCRIBE tables;
+  DESCRIBE <keyspace>.<columnfamily>;
+  
+  
+  
+SELECT keyspace_name, table_name
+FROM system_schema.tables
+WHERE keyspace_name = 'test';

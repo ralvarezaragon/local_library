@@ -1,0 +1,76 @@
+############################################################
+# Composer file for frank services
+# Total host resources: 8CPUs / 64 Gb RAM
+############################################################
+version: "3"
+services:
+  bb-db-products-prod:  
+    build:
+      context: /.
+      dockerfile: /usr/dockerfiles/bb-pxc57/Dockerfile
+    deploy:
+	  mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 1h
+      volumes:
+        bb-products-dvc-prod:/var/lib/mysql  
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 8000M
+      restart: "no"
+      restart_policy:
+        condition: none
+    ports:
+      - "3301:3306"
+    networks:
+      - bb-network-prod
+  bb-db-broadcast-prod:    
+    build:
+      context: /.
+      dockerfile: /usr/dockerfiles/bb-pxc57/Dockerfile
+    deploy:
+	  mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 1h
+      volumes:
+        bb-broadcast-dvc-prod:/var/lib/mysql  
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 32000M
+      restart: "no"
+      restart_policy:
+        condition: none
+    ports:
+      - "3302:3306"
+    networks:
+      - bb-network-prod
+  bb-db-numbers-prod:    
+    build:
+      context: /.
+      dockerfile: /usr/dockerfiles/bb-pxc57/Dockerfile
+    deploy:
+	  mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 1h
+      volumes:
+        bb-numbers-dvc-prod:/var/lib/mysql  
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 16000M
+      restart: "no"
+      restart_policy:
+        condition: none
+    ports:
+      - "3303:3306"
+    networks:
+      - bb-network-prod
+      

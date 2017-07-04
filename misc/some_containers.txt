@@ -1,0 +1,16 @@
+docker run --name exporter_collectd -d -p 9103:9103 -p 25826:25826/udp prom/collectd-exporter -collectd.listen-address=":25826"
+
+docker run --name grafana -d -p 3000:3000 -v /var/lib/grafana:/var/lib/grafana -e "GF_SECURITY_ADMIN_PASSWORD=admin" grafana/grafana
+
+docker run --name prometheus -d -p 9090:9090 quay.io/prometheus/prometheus
+
+docker run \
+--name test \
+-h bb-db-products-prod-1 \
+-p 3301:3306 \
+-v /opt/mysql-data/bb-db-products-prod-1/:/var/lib/mysql \
+-v /opt/docker-env/config-files/mycnf-products1:/etc/mysql/my.cnf \
+-it -d \
+bb-pxc57
+
+

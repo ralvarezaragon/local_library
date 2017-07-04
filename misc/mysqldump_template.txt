@@ -1,1 +1,2 @@
-mysqldump esme_identification reporo_ident --single-transaction --quick --lock-tables=false --no-data > /tmp/sch.sql
+mysqldump esme_crm contacts --single-transaction --quick --lock-tables=false > /tmp/contacts.sql
+mysqldump ads_system adnetwork_types --single-transaction --quick --lock-tables=false > /tmp/adnetwork_types.sql

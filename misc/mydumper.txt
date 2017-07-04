@@ -2,8 +2,8 @@ time ./mydumper/mydumper \
 	--host=10.0.1.82 \
 	--user=admin \
 	--password=wastinglightdearrosemary \
-	--database=esme_mesh_tracking \
-	--tables-list=mesh_india_tanla \
+	--database=esme_statistics_monthly \
+	--tables-list=pnl_yearly_total_regen \
 	--chunk-filesize=50 \
 	--no-locks \
 	--trx-consistency-only \
@@ -11,5 +11,5 @@ time ./mydumper/mydumper \
 	--use-savepoints \
 	--threads=2 \
 	--verbose=3 \
-	--outputdir='/tmp/output_in'
+	--outputdir='/tmp/pnl'
 

@@ -4,7 +4,7 @@ SELECT table_schema
   ,create_time
   ,round(((data_length + index_length) / 1024 / 1024),2) 'Size in MB'
 FROM information_schema.TABLES
-WHERE TABLE_TYPE='BASE TABLE' and table_schema = 'ads_traffic'
-#GROUP BY table_schema, table_name
-#having sum(round(((data_length + index_length) / 1024 / 1024),2)) > 50
-order by 2;
+WHERE TABLE_TYPE='BASE TABLE' 
+GROUP BY table_schema, table_name
+having sum(round(((data_length + index_length) / 1024 / 1024),2)) > 1024
+order by 5 desc;
