@@ -71,5 +71,5 @@ if __name__ == '__main__':
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
-    print (dict_metric)
+    print (l_metric)
     sleep(5)
