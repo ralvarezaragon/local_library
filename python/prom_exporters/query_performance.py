@@ -69,6 +69,7 @@ if __name__ == '__main__':
       print("=================== {0} ========================".format(node))
       result_list = result.split('\n')
       del result_list[-1]
+      print (result_list)
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
