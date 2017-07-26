@@ -67,9 +67,9 @@ if __name__ == '__main__':
       result_list = result.split('\n')
       del result_list[-1]
       result_list = map(int, result_list)
-      dict_metric['node'] = node
-      dict_metric['count'] = len(result_list)
-      dict_metric['time'] = round(sum(result_list) / float(len(result_list)), 2)
+      dict_metric['node'].append(node)
+      dict_metric['count'].append(result_list)
+      dict_metric['time'].append(round(sum(result_list) / float(len(result_list)), 2))
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
