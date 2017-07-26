@@ -4,13 +4,70 @@ docker run --name grafana -d -p 3000:3000 -v /var/lib/grafana:/var/lib/grafana -
 
 docker run --name prometheus -d -p 9090:9090 quay.io/prometheus/prometheus
 
+docker run -it -d -p 8080:80 --name webserver -v /home/ralvarez/www/html:/var/www/html php:7.0-apache
+docker run -it -d --name dbserver -v /data/dbserver:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=devilcametomepangea mariadb:10
+docker run -it -d --name scripter -v /home/ralvarez/proj2/scripts:/opt/refunds24x7 python:2.7
+
+docker network create -d bridge --subnet=200.0.0.0/16 --gateway=200.0.0.1 --ip-range=200.0.0.0/24 bbnet-test
+
+
 docker run \
---name test \
--h bb-db-products-prod-1 \
+--name products-test-etcd.1 \
+--hostname products-test-etcd.1 \
+-p 2379:2379 \
+--network bbnet-test \
+--ip 200.0.0.2 \
+--cpus="0.5" \
+--memory="1000m" \
+-v /usr/share/ca-certificates/:/etc/ssl/certs \
+-v /opt/docker-replicas/numbers-test-db/config/etcd.conf:/etc/etcd/etcd.conf \
+-itd \
+quay.io/coreos/etcd:v2.3.0-alpha.1 \
+-listen-client-urls http://0.0.0.0:2379 \
+-advertise-client-urls http://0.0.0.0:2379 
+  
+
+  
+docker run \
+--name products-test-db.1 \
+--hostname products-test-db.1 \
 -p 3301:3306 \
--v /opt/mysql-data/bb-db-products-prod-1/:/var/lib/mysql \
--v /opt/docker-env/config-files/mycnf-products1:/etc/mysql/my.cnf \
--it -d \
-bb-pxc57
+-p 2301:2380 \
+--network bbnet-test \
+--ip 200.0.0.10 \
+--cpus="2.0" \
+--memory="8000m" \
+-v /opt/docker-replicas/products-test-db/config/:/etc/mysql \
+-v /opt/docker-replicas/products-test-db/data/:/var/lib/mysql \
+-v /opt/docker-replicas/products-test-db/log/:/var/log/mysql \
+-itd \
+toolbox.basebone.com:5000/mariadb-node
+--------------------------------------------
+docker run \
+--name products-test-db.2 \
+--hostname products-test-db.2 \
+-p 3301:3306 \
+-p 2301:2380 \
+--network bbnet-test \
+--ip 200.0.0.11 \
+--cpus="2.0" \
+--memory="2000m" \
+-v /opt/docker-replicas/products-test-db/config/:/etc/mysql \
+-v /opt/docker-replicas/products-test-db/data/:/var/lib/mysql \
+-v /opt/docker-replicas/products-test-db/log/:/var/log/mysql \
+-itd \
+localhost:5000/mariadb-node
+
+service mysql start --wsrep-new-cluster
+/etc/init.d/mysql start --wsrep-new-cluster
 
 
+
+docker tag mariadb-node localhost:5000/mariadb-node
+docker push localhost:5000/mariadb-node
+
+debian-sys-maint@localhost
+viDrrUBGw4Iu9hcY
+
+
+GRANT RELOAD on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY 'viDrrUBGw4Iu9hcY'; 

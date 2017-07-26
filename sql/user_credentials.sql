@@ -30,6 +30,9 @@ GRANT SELECT ON *.* TO 'phpmyadmin_ro'@'10.0.%';
 CREATE USER 'phpmyadmin'@'10.0.%' IDENTIFIED BY 'password';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE,DROP ON *.* TO 'phpmyadmin'@'10.0.%';
 GRANT EXECUTE ON PROCEDURE admin_resources.sp_rename_table TO 'phpmyadmin'@'10.0.%';
+GRANT EXECUTE ON PROCEDURE admin_resources.sp_clone_table TO 'phpmyadmin'@'10.0.%';
+GRANT EXECUTE ON PROCEDURE admin_resources.sp_query_running TO 'phpmyadmin'@'10.0.%';
+
 
 ## CRON 
 CREATE USER 'cron'@'10.0.%' IDENTIFIED BY 'password';

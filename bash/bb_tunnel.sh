@@ -1,23 +1,18 @@
 #!/bin/bash
 
-server="lps3.basebone.com";
+server="system.basebone.com";
 user="ralvarez";
+ipmi="10.0.1.43";
 local="127.0.0.3"
 ident="/home/ralvarez/.ssh/ralvarez_rsa"
 
 ifconfig lo0 alias ${local} 2> /dev/null;
 
-ports=(
-    80
-    443
-    8084
-    8091
-    15671
-)
-
-sudo ssh ${user}@${server} -N \
-   -i $ident \
-   -L ${local}:80:10.0.50.10:80 \
-   -L ${local}:443:10.0.50.10:443 \
-   -L ${local}:8091:10.0.6.10:8091 \
-   -L ${local}:15672:10.0.6.1:15672
+# Connection between local and proxy server
+ssh ${user}@${server} -N \
+    -i $ident \
+    -L ${local}:80:${ipmi}:80 \
+    -L ${local}:443:${ipmi}:443 \
+    -L ${local}:8084:${ipmi}:8084 \
+    -L ${local}:8091:${ipmi}:8091 \
+    -L ${local}:15672:${ipmi}:15672

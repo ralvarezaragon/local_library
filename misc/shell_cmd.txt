@@ -1,0 +1,2 @@
+# tail log for daemons
+journalctl -fu docker.service

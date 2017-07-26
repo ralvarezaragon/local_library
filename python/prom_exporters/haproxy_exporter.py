@@ -9,7 +9,7 @@ def open_csv():
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
-    url = "https://dblb.basebone.com/haproxy?stats;csv"
+    url = "https://10.0.3.1/haproxy?stats;csv"
     response = urllib2.urlopen(url, context=ctx)
     data = response.read()
     return data
