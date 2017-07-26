@@ -50,7 +50,7 @@ if __name__ == '__main__':
     '10.0.3.41',
     '10.0.3.42'
   ]
-  dict_metric = {}
+  dict_metric = {'node': '', 'count': '', 'time': ''}
   # Start up the server to expose the metrics.
   start_http_server(8003)	
   # build the metrics
