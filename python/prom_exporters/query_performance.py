@@ -34,15 +34,15 @@ if __name__ == '__main__':
   conn["user"] = 'admin'
   conn["pwd"] = 'wastinglightdearrosemary'
   l_node  = [
-    'hopper1.basebone.com',
-    'hopper2.basebone.com',
-    'hopper3.basebone.com',
-    'stats1.basebone.com',
-    'stats2.basebone.com',
-    'stats4.basebone.com',
-    'frank1.basebone.com',
-    'frank2.basebone.com',
-    'frank3.basebone.com'
+    '10.0.3.20',
+    '10.0.3.21',
+    '10.0.3.22',
+    '10.0.3.50',
+    '10.0.3.51',
+    '10.0.3.53',
+    '10.0.3.40',
+    '10.0.3.41',
+    '10.0.3.42'
   ]
   dict_metric = {}
   # Start up the server to expose the metrics.
@@ -55,7 +55,7 @@ if __name__ == '__main__':
   while True:
     # Add metric_time for script output
     time = datetime.datetime.time(datetime.datetime.now())
-    # open query for metric extraction
+    # open query for metric extraction    
     for node in l_node:      
       result = get_active_queries_info(node)
       #dict_metric['count'] = result['c'],
