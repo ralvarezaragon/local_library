@@ -9,24 +9,10 @@ from time import sleep
 import MySQLdb
 
 
-def open_mysql_conn(conn_array):
-  new_conn = MySQLdb.connect(
-    host=conn_array["host"],
-    user=conn_array["user"],
-    passwd=conn_array["pwd"],
-    db="mysql"
-  )
-  return new_conn
-
-
-
-def get_active_queries_info(c):
-  conn = open_mysql_conn(c)
-  cur = conn.cursor()
-  cur.execute("show processlist")
-  res = cur.fetchone()
-  conn.close()
-  return res
+def get_active_queries_info(host):
+  cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{print $6}'".format(host)
+  os.system(cmd)
+  return os.system(cmd)
 
 
 def get_metric(l_host, result, metric_req, gauge_obj):
@@ -70,14 +56,14 @@ if __name__ == '__main__':
     # Add metric_time for script output
     time = datetime.datetime.time(datetime.datetime.now())
     # open query for metric extraction
-    for node in l_node:
-      conn["host"] = node
-      result = get_active_queries_info(conn)
+    for node in l_node:      
+      result = get_active_queries_info(node)
       #dict_metric['count'] = result['c'],
       #dict_metric['time'] = result['av']
-      print (conn["host"])
+      print("=================== {0} ========================".format(host))
+      print (result)
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
 #print (dict_metric)
-    sleep(5)
+    sleep(10)
