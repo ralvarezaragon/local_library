@@ -41,12 +41,12 @@ def parse_node_name(par):
 def get_metric(l_metric, metric_req, gauge_obj):	
 	for metric in l_metric:		
 		if metric_req == "count":
-			metric_value = metric[1]
+			metric_value = metric['count']
 		elif metric_req == "time":
-			metric_value = metric[2]				
+			metric_value = metric['time']				
 		else:
 			metric_value = 0	
-		gauge_obj.labels(metric[0]).set(metric_value)	
+		gauge_obj.labels(metric['node']).set(metric_value)	
 	return gauge_obj	
 
 
