@@ -10,7 +10,7 @@ import MySQLdb
 
 
 def get_active_queries_info(host):
-  cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{print $6}'".format(host)
+  cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
   os.system(cmd)
   return os.system(cmd)
 
