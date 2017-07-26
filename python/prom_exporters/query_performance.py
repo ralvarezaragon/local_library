@@ -35,9 +35,9 @@ if __name__ == '__main__':
   conn["user"] = 'admin'
   conn["pwd"] = 'wastinglightdearrosemary'
   l_node  = [
-    '10.0.3.20',
     '10.0.3.21',
     '10.0.3.22',
+    '10.0.3.23',
     '10.0.3.50',
     '10.0.3.51',
     '10.0.3.53',
