@@ -23,7 +23,7 @@ def open_mysql_conn(conn_array):
 def get_active_queries_info(c):
   conn = open_mysql_conn(c)
   cur = conn.cursor()
-  cur.execute("select count(*) as c, avg(time_ms) as av from information_schema.processlist where  command !='Sleep' and info not like '%information_schema.processlist%'")
+  cur.execute("show processlist")
   res = cur.fetchone()
   conn.close()
   return res
@@ -73,8 +73,8 @@ if __name__ == '__main__':
     for node in l_node:
       conn["host"] = node
       result = get_active_queries_info(conn)
-      dict_metric['count'] = result['c'],
-      dict_metric['time'] = result['av']
+      #dict_metric['count'] = result['c'],
+      #dict_metric['time'] = result['av']
       print (conn["host"])
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
