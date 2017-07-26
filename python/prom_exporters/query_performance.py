@@ -67,17 +67,16 @@ if __name__ == '__main__':
 
   # Generate some requests.
   while True:
-    print ("hi")
     # Add metric_time for script output
     time = datetime.datetime.time(datetime.datetime.now())
     # open query for metric extraction
     for node in l_node:
       conn["host"] = node
-      result = get_active_queries_info(conn)
+      #result = get_active_queries_info(conn)
       dict_metric.append({'count': result['c'], 'time': result['av']})
-    
+      print (conn["host"])
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
-    print (dict_metric)
+#print (dict_metric)
     sleep(5)
