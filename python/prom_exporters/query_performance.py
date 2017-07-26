@@ -18,7 +18,7 @@ def get_active_queries_info(host):
 
 def get_active_queries_info_new(host):
   cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
-  output = subprocess.check_output(CMD, shell=True)
+  output = subprocess.check_output(cmd, shell=True)
   return output
 
 def get_metric(l_host, result, metric_req, gauge_obj):
