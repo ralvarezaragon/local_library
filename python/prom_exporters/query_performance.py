@@ -6,7 +6,6 @@ import datetime
 import argparse
 import subprocess
 from time import sleep
-import MySQLdb
 import os
 import subprocess
 

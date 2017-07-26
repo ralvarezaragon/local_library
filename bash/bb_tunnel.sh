@@ -16,3 +16,4 @@ ssh ${user}@${server} -N \
     -L ${local}:8084:${ipmi}:8084 \
     -L ${local}:8091:${ipmi}:8091 \
     -L ${local}:15672:${ipmi}:15672
+    -L ${local}:8003:${ipmi}:8003
