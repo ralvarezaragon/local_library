@@ -50,7 +50,6 @@ if __name__ == '__main__':
     '10.0.3.41',
     '10.0.3.42'
   ]
-  dict_metric = {}
   l_metric = []
   # Start up the server to expose the metrics.
   start_http_server(8003)	
@@ -68,11 +67,7 @@ if __name__ == '__main__':
       result_list = result.split('\n')
       del result_list[-1]
       result_list = map(int, result_list)
-      l_metric.extend = [
-        dict_metric['node'] = node,
-        dict_metric['count'] = result_list,
-        dict_metric['time'] = round(sum(result_list) / float(len(result_list)), 2)
-      ]
+      l_metric.extend = [{'node' : node, 'count' : result_list, 'time' : round(sum(result_list) / float(len(result_list)), 2)}]
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
