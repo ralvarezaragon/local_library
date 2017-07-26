@@ -18,8 +18,8 @@ def get_active_queries_info(host):
 
 def get_active_queries_info_new(host):
   cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
-  proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-  return proc.stdout.readlines()
+  output = subprocess.check_output(CMD, shell=True)
+  return output
 
 def get_metric(l_host, result, metric_req, gauge_obj):
 	l_metric_length = len(l_host)	
@@ -63,12 +63,11 @@ if __name__ == '__main__':
     time = datetime.datetime.time(datetime.datetime.now())
     # open query for metric extraction    
     for node in l_node:      
-      result = get_active_queries_info_new(node)
-      for res in result:
+      result = get_active_queries_info_new(node)      
       #dict_metric['count'] = result['c'],
       #dict_metric['time'] = result['av']
-        print("=================== {0} ========================".format(node))
-        print (res)
+      print("=================== {0} ========================".format(node))
+      print output.split('\n')
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
