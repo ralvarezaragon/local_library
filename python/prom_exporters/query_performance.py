@@ -72,9 +72,9 @@ if __name__ == '__main__':
     # open query for metric extraction
     for node in l_node:
       conn["host"] = node
-      #result = get_active_queries_info(conn)
-      #dict_metric['count'] = result['c'],
-      #dict_metric['time'] = result['av']
+      result = get_active_queries_info(conn)
+      dict_metric['count'] = result['c'],
+      dict_metric['time'] = result['av']
       print (conn["host"])
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
