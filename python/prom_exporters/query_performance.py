@@ -62,9 +62,9 @@ if __name__ == '__main__':
       #dict_metric['count'] = result['c'],
       #dict_metric['time'] = result['av']
       print("=================== {0} ========================".format(node))
-      print (result)
+      print (result[0])
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
 #print (dict_metric)
-    sleep(10)
+    sleep(5)
