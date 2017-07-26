@@ -7,6 +7,7 @@ import argparse
 import subprocess
 from time import sleep
 import MySQLdb
+import os
 
 
 def get_active_queries_info(host):
