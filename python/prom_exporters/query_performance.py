@@ -16,10 +16,27 @@ def get_active_queries_info(host):
   os.system(cmd)
   return os.system(cmd)
 
+
 def get_active_queries_info_new(host):
   cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
   output = subprocess.check_output(cmd, shell=True)
   return output
+
+
+def parse_node_name(par):
+	switcher = {
+		"10.0.3.21": "hopper1",
+		"10.0.3.22": "hopper2",
+		"10.0.3.23": "hopper3",
+		"10.0.3.50": "stats1",
+		"10.0.3.51": "stats2",
+		"10.0.3.53": "stats4",
+		"10.0.3.40": "frank1",
+		"10.0.3.41": "frank2",
+		"10.0.3.42": "frank3"		
+	}	
+	return switcher.get(par, par)
+
 
 def get_metric(l_host, result, metric_req, gauge_obj):
 	l_metric_length = len(l_host)	
@@ -67,7 +84,7 @@ if __name__ == '__main__':
       result_list = result.split('\n')
       del result_list[-1]
       result_list = map(int, result_list)
-      l_metric.append ({'node' : node, 'count' : result_list, 'time' : round(sum(result_list) / float(len(result_list)), 2)})
+      l_metric.append ({'node' : parse_node_name(node), 'count' : result_list, 'time' : round(sum(result_list) / float(len(result_list)), 2)})
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
