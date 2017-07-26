@@ -38,16 +38,15 @@ def parse_node_name(par):
 	return switcher.get(par, par)
 
 
-def get_metric(l_host, result, metric_req, gauge_obj):
-	l_metric_length = len(l_host)	
-	for i in range(l_metric_length):		
+def get_metric(l_metric, metric_req, gauge_obj):	
+	for metric in l_metric:		
 		if metric_req == "count":
-			metric_value = result['c']
+			metric_value = metric[1]
 		elif metric_req == "time":
-			metric_value = result['av']				
+			metric_value = metric[2]				
 		else:
 			metric_value = 0	
-		gauge_obj.labels(node_name).set(metric_value)	
+		gauge_obj.labels(metric[0]).set(metric_value)	
 	return gauge_obj	
 
 
@@ -84,8 +83,8 @@ if __name__ == '__main__':
       result_list = result.split('\n')
       del result_list[-1]
       result_list = map(int, result_list)
-      l_metric.append ({'node' : parse_node_name(node), 'count' : result_list, 'time' : round(sum(result_list) / float(len(result_list)), 2)})
-    #get_metric(conn["host"], result, "count", g_count)
+      l_metric.append ({'node' : parse_node_name(node), 'count' : len(result_list), 'time' : round(sum(result_list) / float(len(result_list)), 2)})
+    get_metric(l_metric, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
     print (l_metric)
