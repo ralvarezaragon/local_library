@@ -63,16 +63,15 @@ if __name__ == '__main__':
     time = datetime.datetime.time(datetime.datetime.now())
     # open query for metric extraction    
     for node in l_node:      
-      result = get_active_queries_info_new(node)      
-      #dict_metric['count'] = result['c'],
-      #dict_metric['time'] = result['av']
+      result = get_active_queries_info_new(node)  
       print("=================== {0} ========================".format(node))
       result_list = result.split('\n')
       del result_list[-1]
       result_list = map(int, result_list)
-      print (result_list)
+      dict_metric['count'] = len(result_list)
+      dict_metric['time'] = round(sum(result_list) / float(len(result_list)), 2)
     #get_metric(conn["host"], result, "count", g_count)
     #get_metric(conn["host"], result, "time", g_time)		
     #print "{0}::mysql_query_count and time running".format(time)
-#print (dict_metric)
+    print (dict_metric)
     sleep(5)
