@@ -12,12 +12,6 @@ import subprocess
 
 def get_active_queries_info(host):
   cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
-  os.system(cmd)
-  return os.system(cmd)
-
-
-def get_active_queries_info_new(host):
-  cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
   output = subprocess.check_output(cmd, shell=True)
   return output
 
@@ -78,13 +72,12 @@ if __name__ == '__main__':
     time = datetime.datetime.time(datetime.datetime.now())
     # open query for metric extraction    
     for node in l_node:      
-      result = get_active_queries_info_new(node)  
+      result = get_active_queries_info(node)  
       result_list = result.split('\n')
       del result_list[-1]
       result_list = map(int, result_list)
       l_metric.append ({'node' : parse_node_name(node), 'count' : len(result_list), 'time' : round(sum(result_list) / float(len(result_list)), 2)})
     get_metric(l_metric, "count", g_count)
-    #get_metric(conn["host"], result, "time", g_time)		
-    #print "{0}::mysql_query_count and time running".format(time)
+    get_metric(l_metric, "time", g_time)	  
     print (l_metric)
     sleep(5)
