@@ -1,0 +1,20 @@
+CREATE TABLE `top10_project_finance` (
+  `id` INT(11) AUTO_INCREMENT,
+  `group_project_id` INT(11) NOT NULL DEFAULT 0,
+  `activity_month` DATE NOT NULL DEFAULT '000-00-00',
+  `contry_code` INT(11) NOT NULL DEFAULT 0,
+  `top1` VARCHAR(30) NULL,
+  `top2` VARCHAR(30) NULL,
+  `top3` VARCHAR(30) NULL,
+  `top4` VARCHAR(30) NULL,
+  `top5` VARCHAR(30) NULL,
+  `top6` VARCHAR(30) NULL,
+  `top7` VARCHAR(30) NULL,
+  `top8` VARCHAR(30) NULL,
+  `top9` VARCHAR(30) NULL,
+  `top10` VARCHAR(30) NULL,
+  PRIMARY KEY (`id`),
+  KEY `i_group_project_id` (`group_project_id`),
+  KEY `i_activity_month` (`activity_month`),
+  KEY `i_contry_code` (`contry_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

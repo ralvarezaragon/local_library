@@ -66,4 +66,6 @@ docker swarm join --token SWMTKN-1-1jdi83vom6aq1s9ad72dg1vvntsarw9igtngfzbu23s14
 In order to connect a bunch of machines and orchestrate with swarm we use overlap driver
 ```
 docker network create -d overlay --subnet=100.0.0.0/16 --gateway=100.0.0.1 --ip-range=100.0.0.0/24 bbnet-prod
+docker network create -d overlay --subnet=200.0.0.0/16 --gateway=200.0.0.1 --ip-range=200.0.0.0/24 bbnet-test
+docker network create -d overlay --subnet=200.0.0.0/16 --gateway=200.0.0.1 --ip-range=200.0.0.10/15 bb-products-network-test
 ```
