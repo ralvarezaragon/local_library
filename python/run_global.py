@@ -8,7 +8,7 @@ import argparse
 def option_menu():
   parser = argparse.ArgumentParser()
   parser.add_argument(
-    '--cluster', metavar='c', dest='target', type=str, choices=["hopper", "stats", "frank", "hopper1", "hopper2", "hopper2", "stats1", "stats2", "stats3", "frank1", "frank2", "frank3", "all"],
+    '--target', metavar='c', dest='target', type=str, choices=["hopper", "stats", "frank", "hopper1", "hopper2", "hopper2", "stats1", "stats2", "stats3", "frank1", "frank2", "frank3", "all"],
     help="Select the target cluster [hopper1..3|stats1..3|frank1..3|all]"
   )
   parser.add_argument(
