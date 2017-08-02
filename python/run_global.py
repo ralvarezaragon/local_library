@@ -35,6 +35,6 @@ elif (opt.target == "all"):
 else:
   l_target=['{0}.basebone.com'.format(opt.target)]
   
-shell_cmd = "ssh -i /remote/.ssh/id_rsa sshsync@{0} `{1}`".format(target, opt.cmd)
+shell_cmd = "ssh -i /remote/.ssh/id_rsa sshsync@{0} {1}".format(opt.target, opt.cmd)
 output = subprocess.check_output(shell_cmd, shell=True)
 print output
