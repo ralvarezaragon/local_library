@@ -53,6 +53,7 @@ def get_user_list(c):
   conn.close()
   return res
 
+
 today = datetime.date.today()
 logging.basicConfig(
   format="%(asctime)s::%(filename)s::%(levelname)s::%(message)s",
@@ -62,6 +63,11 @@ logging.basicConfig(
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 
+try:
+  config = parse_json('config.json')
+except Exception as e:     
+    exception_handler(e, 'y')
+    
 if __name__ == '__main__':
   # Load the menu
   try:
@@ -70,6 +76,11 @@ if __name__ == '__main__':
     exception_handler(e, 'y')
   # Get the list of mysql users with privileges
   try:
-    get_user_list(config["connections"][opt.cluster])
+    for host in config["connections"][opt.cluster]:
+      conn['host'] = host
+      conn['user'] = config['credential']['user']
+      conn['pass'] = config['credential']['pass']
+      print get_user_list(conn)
+      print "================================================="
   except Exception as e:     
     exception_handler(e, 'y')  
