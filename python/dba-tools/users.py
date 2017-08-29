@@ -81,7 +81,14 @@ if __name__ == '__main__':
     conn['host'] = host
     conn['user'] = config['credentials']['user']
     conn['pass'] = config['credentials']['pass']
-    print get_user_list(conn)
-    print "================================================="
+    print "========================== {0} ========================".format(host)
+    user_list =  get_user_list(conn)
+    for user in user_list:
+      print "Username: {0}".format(user['full_user'])      
+      print "Privileges: {0}".format(user['privileges'])
+      print "Grant option: {0}".format(user['grant'])
+      print "++++++++++++++++++++++++++++++++++++++++"
+    print "========================================================="
+      
   #except Exception as e:     
   #  exception_handler(e, 'y')  
