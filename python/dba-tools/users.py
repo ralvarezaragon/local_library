@@ -54,7 +54,7 @@ def get_user_list(c):
   conn.close()
   return res
 
-
+today = datetime.date.today()
 logging.basicConfig(
   format="%(asctime)s::%(filename)::%(levelname)s::%(message)s",
   filename=today.strftime("/var/log/dbatools_%y%m%d.log"),
