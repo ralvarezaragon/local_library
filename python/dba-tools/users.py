@@ -76,6 +76,7 @@ if __name__ == '__main__':
     exception_handler(e, 'y')
   # Get the list of mysql users with privileges
   try:
+    conn = dict()
     for host in config["connections"][opt.cluster]:
       conn['host'] = host
       conn['user'] = config['credential']['user']
