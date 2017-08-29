@@ -28,7 +28,7 @@ def option_menu():
     help="Select the target cluster [hopper|stats|frank|fargo]"
   )
   parser.add_argument(
-    '--option', metavar='o', dest='dbname', type=str, choices=["diff", "show", "add", "remove", "flush"],
+    '--option', metavar='o', dest='option', type=str, choices=["diff", "show", "add", "remove", "flush"],
     help="Choose betwen the option [diff|show|add|remove|flush]"
   )  
   args = parser.parse_args()
