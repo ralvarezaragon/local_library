@@ -77,7 +77,7 @@ if __name__ == '__main__':
   # Get the list of mysql users with privileges
   #try:
   conn = dict()
-  for host in config["connections"]['nodes'][opt.cluster]:
+  for host in config["connections"][opt.cluster]['nodes']:
     conn['host'] = host
     conn['user'] = config['credentials']['user']
     conn['pass'] = config['credential']['pass']
