@@ -47,7 +47,7 @@ def get_user_list(c):
   cur.execute("""SELECT concat(u.user, '@', u.host) as 'full_user', GROUP_CONCAT(privilege_type SEPARATOR ', ') as 'privileges', max(is_grantable) as 'grant'
               FROM mysql.user u
               LEFT JOIN information_schema.user_privileges up ON concat(u.user, '@', u.host) = replace(up.grantee, \"'\", \"\")
-              GROUP BY user, host\G
+              GROUP BY user, host\\G
   """)
   res = cur.fetch()
   conn.close()
