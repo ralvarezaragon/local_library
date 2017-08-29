@@ -90,8 +90,8 @@ if __name__ == '__main__':
   except Exception as e:     
     exception_handler(e, 'y')
   # Get the list of mysql users with privileges
-  #try:
-  show_user_list(config)
-      
-  #except Exception as e:     
-  #  exception_handler(e, 'y')  
+  if opt.option == "show":
+    try:
+      show_user_list(config)      
+    except Exception as e:     
+      exception_handler(e, 'y')
