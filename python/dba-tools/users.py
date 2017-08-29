@@ -61,7 +61,7 @@ logging.basicConfig(
   level=logging.INFO
 )
 console = logging.StreamHandler()
-console.setLevel(logging.INFO)
+console.setLevel(logging.DEBUG)
 
 try:
   config = parse_json('config.json')
@@ -75,13 +75,13 @@ if __name__ == '__main__':
   except Exception as e:     
     exception_handler(e, 'y')
   # Get the list of mysql users with privileges
-  try:
-    conn = dict()
-    for host in config["connections"][opt.cluster]:
-      conn['host'] = host
-      conn['user'] = config['credential']['user']
-      conn['pass'] = config['credential']['pass']
-      print get_user_list(conn)
-      print "================================================="
-  except Exception as e:     
-    exception_handler(e, 'y')  
+  #try:
+  conn = dict()
+  for host in config["connections"][opt.cluster]:
+    conn['host'] = host
+    conn['user'] = config['credential']['user']
+    conn['pass'] = config['credential']['pass']
+    print get_user_list(conn)
+    print "================================================="
+  #except Exception as e:     
+  #  exception_handler(e, 'y')  
