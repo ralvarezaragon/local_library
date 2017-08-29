@@ -49,7 +49,7 @@ def get_user_list(c):
               LEFT JOIN information_schema.user_privileges up ON concat(u.user, '@', u.host) = replace(up.grantee, \"'\", \"\")
               GROUP BY user, host
   """)
-  res = cur.fetch()
+  res = cur.fetchall()
   conn.close()
   return res
 
