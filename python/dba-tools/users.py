@@ -1,8 +1,7 @@
 #!/usr/bin/python
 import MySQLdb
 import json
-import logging
-import datetime
+import logging, datetime, sys
 import argparse
 
 
