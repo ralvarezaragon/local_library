@@ -4,6 +4,7 @@ from prometheus_client import start_http_server, Summary, Gauge
 import urllib, json
 import datetime
 import argparse
+import requests 
 from time import sleep
 
 
@@ -39,14 +40,22 @@ def parse_node_name(par):
 		"http://10.0.6.15:8092/": "w6",
 		"http://10.0.6.16:8092/": "w7",
 		"http://10.0.6.17:8092/": "w8",
-		"http://10.0.1.100:8092/": "m1",
-		"http://10.0.1.101:8092/": "m2",
-		"http://10.0.1.102:8092/": "m3",
-  	"http://10.0.1.103:8092/": "m4",
-		"http://10.0.1.104:8092/": "m5",
-		"http://10.0.1.105:8092/": "m6",
+		"http://10.0.4.2:8092/": "app1",
+		"http://10.0.4.5:8092/": "app4",
+		"http://10.0.4.6:8092/": "app5",
+		"http://10.0.4.7:8092/": "app6"
 	}	
 	return switcher.get(par, par)
+
+
+def get_up_node():	
+	node_l = ['w1','w2','w3','w4','w5','w6','w7','w8']
+	for node in node_l:
+		uri = "http://{0}.basebone.com:8091/pools/default/".format(node)
+		r = requests.get(uri)
+		if r.status_code == 200:
+			return uri
+		
 
 def get_metric(l_metric, metric_req, gauge_obj, cluster_name):
 	l_metric_length = len(l_metric["nodes"])	
@@ -73,8 +82,9 @@ def get_metric(l_metric, metric_req, gauge_obj, cluster_name):
 
 
 if __name__ == '__main__':
-  # setup cb cluster API
-	cb_url_w = "http://w2.basebone.com:8091/pools/default/"	
+  # setup cb cluster API	
+	cb_url = get_up_node()
+	#print get_up_node(cb_url_w)
 	# Start up the server to expose the metrics.
 	start_http_server(8001)	
 	# build the metrics
@@ -91,7 +101,7 @@ if __name__ == '__main__':
 		# Add metric_time for script output
 		time = datetime.datetime.time(datetime.datetime.now())
 		# open csv for metric extraction
-		result = get_json_data(cb_url_w)
+		result = get_json_data(cb_url)
 		get_metric(result, "status", g_status, "w1")
 		get_metric(result, "membership", g_membership, "w1")		
 		get_metric(result, "mem_total", g_mem_total, "w1")
@@ -99,5 +109,5 @@ if __name__ == '__main__':
 		get_metric(result, "cpu_usage", g_cpu_usage, "w1")
 		get_metric(result, "hdd_size", g_hdd_size, "w1")
 		get_metric(result, "hdd_used", g_hdd_used, "w1")		
-		print "{0}::couchbase_node_status:{1}".format(time, cb_url_w)		
+		print "{0}::couchbase_node_status:{1}".format(time, cb_url)		
 		sleep(5)

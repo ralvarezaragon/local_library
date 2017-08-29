@@ -8,6 +8,39 @@ docker run -it -d -p 8080:80 --name webserver -v /home/ralvarez/www/html:/var/ww
 docker run -it -d --name dbserver -v /data/dbserver:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=devilcametomepangea mariadb:10
 docker run -it -d --name scripter -v /home/ralvarez/proj2/scripts:/opt/refunds24x7 python:2.7
 
+docker run \
+--name=cst1 \
+--hostname=cst1 \
+-p 16000:7199 \
+-p 16001:7000 \
+-p 16002:7001 \
+-p 16003:9160 \
+-p 16004:9042 \
+-itd \
+cs-node:2
+
+docker run \
+--name=cst2 \
+--hostname=cst2 \
+-p 16010:7199 \
+-p 16011:7000 \
+-p 16012:7001 \
+-p 16013:9160 \
+-p 16014:9042 \
+-itd \
+cs-node:2
+
+docker run \
+--name=cst3 \
+--hostname=cst3 \
+-p 16020:7199 \
+-p 16021:7000 \
+-p 16022:7001 \
+-p 16023:9160 \
+-p 16024:9042 \
+-itd \
+cs-node:2
+
 docker network create -d bridge --subnet=200.0.0.0/16 --gateway=200.0.0.1 --ip-range=200.0.0.0/24 bbnet-test
 
 
@@ -82,3 +115,4 @@ viDrrUBGw4Iu9hcY
 
 
 GRANT RELOAD on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY 'viDrrUBGw4Iu9hcY';
+insert into query_log (query_type, dbname, query, guid) values ('SELECT', 'dbtest', 'SELECT * FROM `dbtrest`', 'TEST');

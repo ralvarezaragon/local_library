@@ -1,0 +1,29 @@
+docker network create main --ip-range=172.0.0.2/24 --subnet=172.0.0.0/16
+
+docker run -itd \
+-p 10.0.1.43:9090:9090 \
+--network=main \
+--ip 172.0.0.2 \
+--name prometheus \
+-v /opt/graph-tool/prometheus.yml:/etc/prometheus/prometheus.yml \
+prom/prometheus \
+  -config.file=/etc/prometheus/prometheus.yml \
+  -storage.local.path=/prometheus
+
+docker run -itd \
+-p 10.0.1.43:3000:3000 \
+--network=main \
+--ip 172.0.0.3 \
+--name grafana \
+-v /graph-tool/grafana:/var/lib/grafana \
+-e "GF_SECURITY_ADMIN_PASSWORD=admin" \
+grafana/grafana
+
+docker run -d \
+--name collectd-exporter \
+--network=main \
+--ip 172.0.0.4 \
+-p 9103:9103 \
+-p 25826:25826/udp \
+prom/collectd-exporter \
+  --collectd.listen-address=":25826"

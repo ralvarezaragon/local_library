@@ -11,6 +11,7 @@ import subprocess
 
 
 def get_active_queries_info(host):
+  # this query just  output a list with time_ms column
   cmd = "mysql -h {0} -e 'show processlist' | grep Query | awk -F'\t' '{{print $6}}'".format(host)
   output = subprocess.check_output(cmd, shell=True)
   return output
@@ -24,6 +25,9 @@ def parse_node_name(par):
 		"10.0.3.50": "stats1",
 		"10.0.3.51": "stats2",
 		"10.0.3.53": "stats4",
+    "10.0.3.30": "fargo1",
+    "10.0.3.31": "fargo2",
+    "10.0.3.32": "fargo3",
 		"10.0.3.40": "frank1",
 		"10.0.3.41": "frank2",
 		"10.0.3.42": "frank3"		
@@ -34,7 +38,7 @@ def parse_node_name(par):
 def get_metric(l_metric, metric_req, gauge_obj):	
 	for metric in l_metric:		
 		if metric_req == "count":
-			metric_value = metric['count']
+			metric_value = metric['count'] - 1
 		elif metric_req == "time":
 			metric_value = metric['time']				
 		else:
@@ -55,6 +59,9 @@ if __name__ == '__main__':
     '10.0.3.50',
     '10.0.3.51',
     '10.0.3.53',
+    '10.0.3.30',
+    '10.0.3.31',
+    '10.0.3.32',
     '10.0.3.40',
     '10.0.3.41',
     '10.0.3.42'

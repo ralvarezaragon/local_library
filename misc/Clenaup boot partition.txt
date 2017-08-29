@@ -1,0 +1,19 @@
+# Cleanup boot 
+    current kernel version 4.4.0-71-generic    
+    rm -rf *-4.4.0-{31,65,66,70}-*
+    apt-get -f install
+    apt-get purge linux-image-4.4.0-31-generic
+    apt-get purge linux-image-4.4.0-65-generic
+    apt-get purge linux-image-4.4.0-66-generic
+    apt-get purge linux-image-4.4.0-70-generic
+    apt-get autoremove
+    apt-get update && apt-get upgrade
+    update-grub
+
+# Stop all apps and pmm-admin
+# Stop mysql
+# Add NUMA change to my.cnf
+# Start mysql
+# mysql_upgrade --upgrade-system-tables
+# Start al lapps & pmm-admin
+dpkg --list 'linux-image*' | grep ^ii | grep -v $(uname -r)

@@ -19,7 +19,7 @@ def prepare_csv_data():
     csv_out = open_csv()
     data_raw = csv_out.split("\n")
     data = [x for x in data_raw if
-                ("hopper" in x or "stats" in x or "frank" in x) and ("FRONTEND" not in x and "BACKEND" not in x)]
+                ("hopper" in x or "stats" in x or "frank" in x or "fargo" in x) and ("FRONTEND" not in x and "BACKEND" not in x)]
     return data
 
 

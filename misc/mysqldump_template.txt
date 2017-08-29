@@ -2,3 +2,5 @@ mysqldump esme_crm contacts --single-transaction --quick --lock-tables=false > /
 mysqldump ads_system adnetwork_types --single-transaction --quick --lock-tables=false > /tmp/adnetwork_types.sql
 
 mysqldump esme_statistics_monthly pnl_yearly_projects_new_2008 --single-transaction --quick --lock-tables=false > /tmp/pnl_yearly_projects_new_2008.sql
+
+mysqldump ads_templates templates --single-transaction --quick --lock-tables=false > /tmp/templates.sql

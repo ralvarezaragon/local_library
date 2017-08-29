@@ -1,17 +1,12 @@
-from cassandra.cluster import Cluster
-import uuid
+#!/usr/bin/python
 import csv
 import re
 import sys
-
-cluster = Cluster(['5.40.33.9'], port=16014)
-session = cluster.connect()
-
-session.set_keyspace('testks')
-#session.execute('USE users')
+import pandas as pd
 
 csv.field_size_limit(sys.maxsize)
-input_l = list(csv.reader(open('query_10_30.log', 'rb'), delimiter='\t'))
+input_l = list(csv.reader(open('query_11_30.log', 'rb'), delimiter='\t'))
+df = pd.DataFrame(columns=('query_type', 'dbname'))
 
 for entry in input_l:
   try:    
@@ -39,15 +34,19 @@ for entry in input_l:
       dbname = ''
       query_type = 'UNKNOWN'
   except Exception as e:
-      query = ''
-      dbname = ''
+      dbname = 'unknown'
       query_type = 'UNKNOWN'
+  #output_row_l.append(query_type)
+  #output_row_l.append(dbname)
+  print "{0} | {1}".format(query_type, dbname)
+  df.loc[len(df)] = [query_type,dbname]
 
-  query = query.replace("'", '"')
-  guid = uuid.uuid4()
-  sql = """
-    INSERT INTO query_log (guid, dbname, query, query_type)
-    VALUES ('{0}', '{1}', '{2}', '{3}')""".format(guid, dbname, query, query_type)
-  print query
-  session.execute(sql)
+print "============================="
+#print df
+df_count = pd.DataFrame(df.groupby('dbname').size().rename('counts'))
+df_count.to_csv('result.csv', sep=';')
+print df_count
 
+
+  
+  

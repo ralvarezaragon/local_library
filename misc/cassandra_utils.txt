@@ -5,7 +5,9 @@ nodetool status
 # Get stats about how the cluster performs
 proxy histograms
 
-
+# Repair node using only the first token found instead the whole toke range
+# Never use just nodetool repair in prod!! it will involve all the nodes (potentially)
+ndoetool repair -pr [keyspace] [column_family]
 
 
 
@@ -21,3 +23,5 @@ proxy histograms
 SELECT keyspace_name, table_name
 FROM system_schema.tables
 WHERE keyspace_name = 'test';
+
+
