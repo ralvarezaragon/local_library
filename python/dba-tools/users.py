@@ -84,9 +84,9 @@ if __name__ == '__main__':
     print "========================== {0} ========================".format(host)
     user_list =  get_user_list(conn)
     for user in user_list:
-      print "Username: {0}".format(user[1])      
-      print "Privileges: {0}".format(user[2])
-      print "Grant option: {0}".format(user[3])
+      print "Username: {0}".format(user[0])      
+      print "Privileges: {0}".format(user[1])
+      print "Grant option: {0}".format(user[2])
       print "++++++++++++++++++++++++++++++++++++++++"
     print "========================================================="
       
