@@ -54,6 +54,21 @@ def get_user_list(c):
   return res
 
 
+def show_user_list(config):
+  conn = dict()
+  for host in config["connections"][opt.cluster]['nodes']:
+    conn['host'] = host
+    conn['user'] = config['credentials']['user']
+    conn['pass'] = config['credentials']['pass']
+    print "========================== {0} ========================".format(host)
+    user_list =  get_user_list(conn)
+    for user in user_list:
+      print "Username: {0}".format(user[0])      
+      print "Privileges: {0}".format(user[1])
+      print "Grant option: {0}".format(user[2])
+      print "++++++++++++++++++++++++++++++++++++++++"
+      
+      
 today = datetime.date.today()
 logging.basicConfig(
   format="%(asctime)s::%(filename)s::%(levelname)s::%(message)s",
@@ -76,19 +91,7 @@ if __name__ == '__main__':
     exception_handler(e, 'y')
   # Get the list of mysql users with privileges
   #try:
-  conn = dict()
-  for host in config["connections"][opt.cluster]['nodes']:
-    conn['host'] = host
-    conn['user'] = config['credentials']['user']
-    conn['pass'] = config['credentials']['pass']
-    print "========================== {0} ========================".format(host)
-    user_list =  get_user_list(conn)
-    for user in user_list:
-      print "Username: {0}".format(user[0])      
-      print "Privileges: {0}".format(user[1])
-      print "Grant option: {0}".format(user[2])
-      print "++++++++++++++++++++++++++++++++++++++++"
-    print "========================================================="
+  show_user_list()
       
   #except Exception as e:     
   #  exception_handler(e, 'y')  
