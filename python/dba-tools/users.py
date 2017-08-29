@@ -80,7 +80,7 @@ if __name__ == '__main__':
   for host in config["connections"][opt.cluster]['nodes']:
     conn['host'] = host
     conn['user'] = config['credentials']['user']
-    conn['pass'] = config['credential']['pass']
+    conn['pass'] = config['credentials']['pass']
     print get_user_list(conn)
     print "================================================="
   #except Exception as e:     
