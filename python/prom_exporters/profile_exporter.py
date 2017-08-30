@@ -30,9 +30,18 @@ def get_update_row(row):
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
-  if row.find('INSERT') > -1:    
-    print get_insert_row(row)
+  if row.find('INSERT') > -1:
+    try:
+      print get_insert_row(row)
+    except Exception as e:
+      print row.rstrip()
   elif row.find('SELECT ') > -1 and row.find(' FROM') > -1:
-    print get_select_row(row)
+    try:
+      print get_select_row(row)
+    except Exception as e:
+      print row.rstrip()
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
-    print get_update_row(row) 
+    try:  
+      print get_update_row(row)
+    except Exception as e:
+      print row.rstrip()
