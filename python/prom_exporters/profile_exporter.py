@@ -20,7 +20,7 @@ def get_select_row(row):
 
 
 def get_update_row(row):
-  row_substr = re.search('(UPDATE )([a-z_0-9]*)`.`([a-z_0-9]*)(` SET )', row)
+  row_substr = re.search('(UPDATE `)([a-z_0-9]*)`.`([a-z_0-9]*)(` SET )', row)
   query['dbname'] = row_substr.group(2)
   query['tname'] = row_substr.group(3)
   query['type'] = 'SELECT'
@@ -46,5 +46,8 @@ for row in iter(p.stdout.readline, b''):
     try:  
       print get_update_row(row)
     except Exception as e:
+      print row.rstrip()
+      exit()
+  elif (row.find('DELETE') > -1 and row.find(' FROM') > -1) or row.find('REPLACE ') > -1:
       print row.rstrip()
       exit()
