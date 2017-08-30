@@ -32,8 +32,10 @@ for row in iter(p.stdout.readline, b''):
   query = dict()
   if row.find('INSERT') > -1:    
     print get_insert_row(row)
+    print "==========================="
   elif row.find('SELECT ') > -1 and row.find('SELECT 1') == -1:
     print get_select_row(row)
+    print "==========================="
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
     print get_update_row(row) 
-  print "==========================="
+    print "==========================="
