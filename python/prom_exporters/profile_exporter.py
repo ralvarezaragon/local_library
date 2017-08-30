@@ -61,7 +61,7 @@ for row in iter(p.stdout.readline, b''):
       exit()
   elif row.find('REPLACE INTO ') > -1:
     try:  
-      print get_update_row(row)
+      print get_replace_row(row)
     except Exception as e:
       print e
       print row.rstrip()
