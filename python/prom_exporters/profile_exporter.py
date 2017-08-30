@@ -35,7 +35,5 @@ for row in iter(p.stdout.readline, b''):
   elif row.find('SELECT ') > -1 and row.find('SELECT 1') == -1:
     print get_select_row(row)
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
-    print get_update_row(row)
-  
-  print query
+    print get_update_row(row) 
   print "==========================="
