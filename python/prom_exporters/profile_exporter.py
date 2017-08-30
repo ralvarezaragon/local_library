@@ -21,5 +21,9 @@ for row in iter(p.stdout.readline, b''):
     query['dbname'] = 'NA'
     query['tname'] = 'NA'
     query['type'] = row.rstrip()
+  else:
+    query['dbname'] = 'NA'
+    query['tname'] = 'NA'
+    query['type'] = 'CRAP'
   print query
   print "==========================="
