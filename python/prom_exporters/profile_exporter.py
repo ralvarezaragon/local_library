@@ -13,11 +13,11 @@ for row in iter(p.stdout.readline, b''):
     query['type'] = 'INSERT'
    
   elif row.find('SELECT *') > -1:
+    print row.rstrip()
     row_substr = re.search('(?<=SELECT .* FROM `)([a-z_0-9]*)`.`([a-z_0-9]*)', row)
     query['dbname'] = row_substr.group(1)
     query['tname'] = row_substr.group(2)
     query['type'] = 'SELECT'
-  else:
-    print row.rstrip()
+    
   print query
   print "==========================="
