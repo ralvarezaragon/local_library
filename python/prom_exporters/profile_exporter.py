@@ -2,6 +2,8 @@
 
 import subprocess as sub
 import re
+import os
+import socket
 
 def get_insert_row(row):
   row_substr = re.search('(INSERT INTO `)([a-z_0-9]*)`.`([a-z_0-9]*)', row)
@@ -38,6 +40,7 @@ def get_replace_row(row):
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
+  query['exported_instance'] = socket.gethostbyaddr(ip)
   if row.find('INSERT') > -1:
     try:
       print get_insert_row(row)
