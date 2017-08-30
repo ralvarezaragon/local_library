@@ -13,8 +13,8 @@ def get_insert_row(row):
 
 def get_select_row(row):
   row_substr = re.search('SELECT .* FROM `([a-z_0-9]*)`.`([a-z_0-9]*)', row)
-  query['dbname'] = row_substr.group(2)
-  query['tname'] = row_substr.group(3)
+  query['dbname'] = row_substr.group(1)
+  query['tname'] = row_substr.group(2)
   query['type'] = 'SELECT'
   return query
 
