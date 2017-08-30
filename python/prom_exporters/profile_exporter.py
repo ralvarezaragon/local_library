@@ -50,8 +50,7 @@ for row in iter(p.stdout.readline, b''):
       print get_select_row(row)
     except Exception as e:
       print e
-      print row.rstrip()
-      exit()
+      print row.rstrip()      
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
     try:  
       print get_update_row(row)
