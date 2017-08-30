@@ -27,6 +27,14 @@ def get_update_row(row):
   return query
 
 
+def get_replace_row(row):
+  row_substr = re.search('(REPLACE INTO `)([a-z_0-9]*)`.`([a-z_0-9]*)', row)
+  query['dbname'] = row_substr.group(2)
+  query['tname'] = row_substr.group(3)
+  query['type'] = 'REPLACE'
+  return query
+
+
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
@@ -48,6 +56,12 @@ for row in iter(p.stdout.readline, b''):
     except Exception as e:
       print row.rstrip()
       exit()
-  elif (row.find('DELETE') > -1 and row.find(' FROM') > -1) or row.find('REPLACE ') > -1:
+  elif row.find('REPLACE INTO ') > -1:
+    try:  
+      print get_update_row(row)
+    except Exception as e:
+      print row.rstrip()
+      exit()    
+  elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
       print row.rstrip()
       exit()
