@@ -12,7 +12,7 @@ def get_insert_row(row):
 
 
 def get_select_row(row):
-  row_substr = re.search('(SELECT .* FROM `)([a-z_0-9]*)`.`([a-z_0-9]*)', row)
+  row_substr = re.search('SELECT .* FROM `([a-z_0-9]*)`.`([a-z_0-9]*)', row)
   query['dbname'] = row_substr.group(2)
   query['tname'] = row_substr.group(3)
   query['type'] = 'SELECT'
@@ -32,10 +32,7 @@ for row in iter(p.stdout.readline, b''):
   query = dict()
   if row.find('INSERT') > -1:    
     print get_insert_row(row)
-    print "==========================="
   elif row.find('SELECT ') > -1 and row.find(' FROM') > -1:
     print get_select_row(row)
-    print "==========================="
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
     print get_update_row(row) 
-    print "==========================="
