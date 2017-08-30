@@ -12,7 +12,7 @@ for row in iter(p.stdout.readline, b''):
     query['tname'] = row_substr.group(2)
     query['type'] = 'INSERT'
    
-  elif row.find('SELECT') > -1:
+  elif row.find('SELECT *') > -1:
     row_substr = re.search('(?<=SELECT .* FROM `)([a-z_0-9]*)`.`([a-z_0-9]*)', row)
     query['dbname'] = row_substr.group(1)
     query['tname'] = row_substr.group(2)
