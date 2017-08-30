@@ -42,24 +42,28 @@ for row in iter(p.stdout.readline, b''):
     try:
       print get_insert_row(row)
     except Exception as e:
+      print e
       print row.rstrip()
       exit()
   elif row.find('SELECT ') > -1 and row.find(' FROM') > -1:
     try:
       print get_select_row(row)
     except Exception as e:
+      print e
       print row.rstrip()
       exit()
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
     try:  
       print get_update_row(row)
     except Exception as e:
+      print e
       print row.rstrip()
       exit()
   elif row.find('REPLACE INTO ') > -1:
     try:  
       print get_update_row(row)
     except Exception as e:
+      print e
       print row.rstrip()
       exit()    
   elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
