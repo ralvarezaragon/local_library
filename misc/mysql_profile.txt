@@ -4,7 +4,7 @@
 # -w - standard output to screen instead of using file
 # add timeout 5 at the very begining for running it only 5 seconds
 
-tcpdump -i eno2 -s 0 -l -w - dst port 3306 | strings | egrep "SELECT|INSERT|DELETE|UPDATE|ALTER|DROP|CREATE|REPLACE" | grep -v "SELECT 1" | tee /tmp/profiler.dat
+tcpdump -i eno2 -s 0 -l -w - dst port 3306 | strings | egrep "SELECT|INSERT|DELETE|UPDATE|ALTER|DROP|CREATE|REPLACE|CALL" | grep -v "SELECT 1" | tee /tmp/profiler.dat
 
 
 tcpdump -tttt -w profile.pcap -i enp8s0 tcp port 3306 -C 5000000 | strings

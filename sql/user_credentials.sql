@@ -64,7 +64,7 @@ GRANT PROCESS ON *.* TO 'clustercheckuser'@'localhost' IDENTIFIED BY 'clusterche
 ## MONITORING
 CREATE USER 'collectd'@'10.0.%' IDENTIFIED BY 'onebyonecomeback';
 GRANT USAGE ON *.* TO 'collectd'@'10.0.%';
-GRANT REPLICATION CLIENT ON *.* TO 'collectd'@'10.0.%';
+GRANT PROCESS, REPLICATION CLIENT ON *.* TO 'collectd'@'10.0.%';
 ################
 # SYS ACCOUNTS #
 ################
