@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
-import subprocess as sub
+import pyshark
 
-p = sub.Popen(('sudo', 'tcpdump', '-s 0 -l -w - dst port 3306'), stdout=sub.PIPE)
-for row in iter(p.stdout.readline, b''):
-    print row.rstrip()   # process here
+capture = pyshark.LiveCapture(interface='eno2')
+capture.sniff(timeout=50)
+
+for packet in capture.sniff_continuously(packet_count=5):
+    print packet
