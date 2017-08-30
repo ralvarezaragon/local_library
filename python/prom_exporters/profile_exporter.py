@@ -33,7 +33,7 @@ for row in iter(p.stdout.readline, b''):
   if row.find('INSERT') > -1:    
     print get_insert_row(row)
     print "==========================="
-  elif row.find('SELECT ') > -1 and row.find('SELECT 1') == -1:
+  elif row.find('SELECT ') > -1 and row.find(' FROM') > -1:
     print get_select_row(row)
     print "==========================="
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
