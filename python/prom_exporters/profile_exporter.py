@@ -65,8 +65,7 @@ for row in iter(p.stdout.readline, b''):
       print get_replace_row(row)
     except Exception as e:
       print e
-      print row.rstrip()
-      exit()    
+      print row.rstrip()       
   elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
       print row.rstrip()
       exit()
