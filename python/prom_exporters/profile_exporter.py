@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+from prometheus_client import start_http_server, Summary, Gauge
 import subprocess as sub
 import re
 import socket
@@ -36,11 +36,21 @@ def get_replace_row(row):
   query['type'] = 'REPLACE'
   return query
 
+def get_metric(query, metric_req, gauge_obj):		
+  if metric_req == "query":
+    metric_value = metric['count']  
+  else:
+    metric_value = 0    
+  gauge_obj.labels(query['exported_instance']).set(metric_value)
+  return gauge_obj	
 
+start_http_server(8004)
+g_query = Gauge("mysql_profile", "Mysql profile query count", ['exported_instance'])
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
   query['exported_instance'] = socket.gethostname()
+  query['count'] = 1
   if row.find('INSERT') > -1:
     try:
       print get_insert_row(row)
@@ -64,3 +74,5 @@ for row in iter(p.stdout.readline, b''):
   elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
       print row.rstrip()
       exit()
+  # Catch value and export it to prom in metric format    
+  get_metric(query, "query", g_query)
