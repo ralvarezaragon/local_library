@@ -38,7 +38,7 @@ def get_replace_row(row):
 
 def get_metric(query, metric_req, gauge_obj):		
   if metric_req == "query":
-    metric_value = metric['count']  
+    metric_value = query['count']  
   else:
     metric_value = 0    
   gauge_obj.labels(query['exported_instance']).set(metric_value)
