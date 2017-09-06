@@ -37,7 +37,8 @@ def get_replace_row(row):
   return query
 
 start_http_server(8004)
-c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'type'])
+#c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'type'])
+c = Counter('mysql_profile', 'Mysql profiling metrics')
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
@@ -45,25 +46,29 @@ for row in iter(p.stdout.readline, b''):
   if row.find('INSERT') > -1:
     try:
       print get_insert_row(row)
-      c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      c.inc()
     except Exception as e:
       err = 1    
   elif row.find('SELECT ') > -1 and row.find(' FROM') > -1:
     try:
       print get_select_row(row)
-      c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      c.inc()
     except Exception as e:
       err = 1 
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
     try:  
       print get_update_row(row)
-      c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      c.inc()
     except Exception as e:
       err = 1
   elif row.find('REPLACE INTO ') > -1:
     try:  
       print get_replace_row(row)
-      c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      c.inc()
     except Exception as e:
       err = 1     
   elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
