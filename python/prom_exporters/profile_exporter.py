@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from prometheus_client import start_http_server, Summary, Gauge
+from prometheus_client import start_http_server, Summary, Counter
 import subprocess as sub
 import re
 import socket
@@ -36,21 +36,12 @@ def get_replace_row(row):
   query['type'] = 'REPLACE'
   return query
 
-def get_metric(query, metric_req, gauge_obj):		
-  if metric_req == "query":
-    metric_value = query['count']  
-  else:
-    metric_value = 0    
-  gauge_obj.labels([query['exported_instance'], query['tname']]).set(metric_value)
-  return gauge_obj	
-
 start_http_server(8004)
-g_query = Gauge("mysql_profile", "Mysql profile query count", ['exported_instance', 'tname'])
+c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'type'])
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
   query['exported_instance'] = socket.gethostname()
-  query['count'] = 1
   if row.find('INSERT') > -1:
     try:
       print get_insert_row(row)
@@ -75,4 +66,4 @@ for row in iter(p.stdout.readline, b''):
       print row.rstrip()
       exit()
   # Catch value and export it to prom in metric format    
-  get_metric(query, "query", g_query)
+  c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
