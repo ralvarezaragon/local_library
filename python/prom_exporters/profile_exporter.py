@@ -37,8 +37,8 @@ def get_replace_row(row):
   return query
 
 start_http_server(8004)
-#c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'type'])
-c = Counter('mysql_profile', 'Mysql profiling metrics')
+c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'query_type'])
+
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
@@ -46,7 +46,7 @@ for row in iter(p.stdout.readline, b''):
   if row.find('INSERT') > -1:
     try:
       print get_insert_row(row)
-      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
+      c.labels(dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()
       c.inc()
     except Exception as e:
       err = 1    
