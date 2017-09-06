@@ -46,29 +46,25 @@ for row in iter(p.stdout.readline, b''):
   if row.find('INSERT') > -1:
     try:
       print get_insert_row(row)
-      c.labels(dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()
-      c.inc()
+      c.labels(exported_instance = query['exported_instance'], dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()      
     except Exception as e:
       err = 1    
   elif row.find('SELECT ') > -1 and row.find(' FROM') > -1:
     try:
       print get_select_row(row)
-      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
-      c.inc()
+      c.labels(exported_instance = query['exported_instance'], dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()            
     except Exception as e:
       err = 1 
   elif row.find('UPDATE') > -1 and row.find('SET') > -1:
     try:  
       print get_update_row(row)
-      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
-      c.inc()
+      c.labels(exported_instance = query['exported_instance'], dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()            
     except Exception as e:
       err = 1
   elif row.find('REPLACE INTO ') > -1:
     try:  
       print get_replace_row(row)
-      #c.labels(dbname = query['dbname'], tname = query['tname'], type = query['type']).inc()
-      c.inc()
+      c.labels(exported_instance = query['exported_instance'], dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()            
     except Exception as e:
       err = 1     
   elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
