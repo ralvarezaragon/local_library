@@ -41,11 +41,11 @@ def get_metric(query, metric_req, gauge_obj):
     metric_value = query['count']  
   else:
     metric_value = 0    
-  gauge_obj.labels(query['exported_instance']).set(metric_value)
+  gauge_obj.labels(query['exported_instance'], query['tname']).set(metric_value)
   return gauge_obj	
 
 start_http_server(8004)
-g_query = Gauge("mysql_profile", "Mysql profile query count", ['exported_instance'])
+g_query = Gauge("mysql_profile", "Mysql profile query count", ['exported_instance', 'tname'])
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
