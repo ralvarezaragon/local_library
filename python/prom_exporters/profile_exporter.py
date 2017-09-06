@@ -41,7 +41,7 @@ def get_metric(query, metric_req, gauge_obj):
     metric_value = query['count']  
   else:
     metric_value = 0    
-  gauge_obj.labels(query['exported_instance'], query['tname']).set(metric_value)
+  gauge_obj.labels([query['exported_instance'], query['tname']]).set(metric_value)
   return gauge_obj	
 
 start_http_server(8004)
