@@ -36,6 +36,14 @@ def get_replace_row(row):
   query['type'] = 'REPLACE'
   return query
 
+
+def get_delete_row(row):
+  row_substr = re.search('(DELETE FROM `)([a-z_0-9]*)`.`([a-z_0-9]*)', row)
+  query['dbname'] = row_substr.group(2)
+  query['tname'] = row_substr.group(3)
+  query['type'] = 'DELETE'
+  return query
+
 start_http_server(8004)
 c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'query_type'])
 
@@ -68,7 +76,10 @@ for row in iter(p.stdout.readline, b''):
     except Exception as e:
       err = 1     
   elif (row.find('DELETE') > -1 and row.find(' FROM') > -1):
-      print row.rstrip()
-      exit()
+    try:  
+      print get_delete_row(row)
+      c.labels(exported_instance = query['exported_instance'], dbname = query['dbname'], tname = query['tname'], query_type = query['type']).inc()            
+    except Exception as e:
+      err = 1 
   # Catch value and export it to prom in metric format    
   
