@@ -2,19 +2,19 @@
 CREATE USER 'nobody'@'10.0.%';
 GRANT ALL PRIVILEGES ON *.* TO 'nobody'@'10.0.%';
 ## ROOT
-CREATE USER 'root'@'10.0.%' IDENTIFIED BY 'deltaDF098';
+CREATE USER 'root'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.0.%' WITH GRANT OPTION;
 
 ## ADMIN 
-CREATE USER 'admin'@'10.0.%' IDENTIFIED BY 'wastinglightdearrosemary';
+CREATE USER 'admin'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON *.* TO 'admin'@'10.0.%' WITH GRANT OPTION;
 
 ## DEV 
-CREATE USER 'dev'@'10.0.%' IDENTIFIED BY 'onebyonetimeslikethese';
+CREATE USER 'dev'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE ON *.* TO 'dev'@'10.0.%';
 
 ## APP_PHP 
-CREATE USER 'app_php'@'10.0.%' IDENTIFIED BY 'thecolourandtheshapemyhero';
+CREATE USER 'app_php'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE ON *.* TO 'app_php'@'10.0.%';
 GRANT DROP ON esme_reports.* TO 'app_php'@'10.0.%';
 GRANT DROP ON esme_live.* TO 'app_php'@'10.0.%';
@@ -22,30 +22,30 @@ GRANT DROP ON esme_stacks.* TO 'app_php'@'10.0.%';
 GRANT DROP ON esme_queue.* TO 'app_php'@'10.0.%';
 
 ## APP_JAVA 
-CREATE USER 'app_java'@'10.0.%' IDENTIFIED BY 'password';
+CREATE USER 'app_java'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE ON *.* TO 'app_java'@'10.0.%';
 
 ## PHPMYADMIN_RO
-CREATE USER 'phpmyadmin_ro'@'10.0.%' IDENTIFIED BY 'sonichighwayscongregation';
+CREATE USER 'phpmyadmin_ro'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT ON *.* TO 'phpmyadmin_ro'@'10.0.%';
 
 ## PHPMYADMIN
-CREATE USER 'phpmyadmin'@'10.0.%' IDENTIFIED BY 'sonichighwayssomethingfromnothing';
+CREATE USER 'phpmyadmin'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE,DROP ON *.* TO 'phpmyadmin'@'10.0.%';
 GRANT EXECUTE ON PROCEDURE admin_resources.sp_rename_table TO 'phpmyadmin'@'10.0.%';
 GRANT EXECUTE ON PROCEDURE admin_resources.sp_clone_table TO 'phpmyadmin'@'10.0.%';
 GRANT EXECUTE ON PROCEDURE admin_resources.sp_query_running TO 'phpmyadmin'@'10.0.%';
 
 ## RO
-CREATE USER 'ro'@'10.0.%' IDENTIFIED BY 'inyourhonorbestofyou';
+CREATE USER 'ro'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT ON *.* TO 'ro'@'10.0.%';
 
 ## CRON 
-CREATE USER 'cron'@'10.0.%' IDENTIFIED BY 'inyourhonornowayback';
+CREATE USER 'cron'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'cron'@'10.0.%';
 
 ## CRON_ADMIN
-CREATE USER 'cron_admin'@'10.0.%' IDENTIFIED BY 'inyourhonorendoverend';
+CREATE USER 'cron_admin'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE,DROP,ALTER ON *.* TO 'cron_admin'@'10.0.%';
 
 ## BKP
@@ -58,8 +58,8 @@ DROP USER 'sstuser'@'10.0.%';
 
 ## CLUSTERCHECK
 CREATE USER 'clustercheckuser'@'10.0.%';
-GRANT PROCESS ON *.* TO 'clustercheckuser'@'10.0.%' IDENTIFIED BY 'clustercheckpassword!';
-GRANT PROCESS ON *.* TO 'clustercheckuser'@'localhost' IDENTIFIED BY 'clustercheckpassword!';
+GRANT PROCESS ON *.* TO 'clustercheckuser'@'10.0.%' IDENTIFIED BY 'pass';
+GRANT PROCESS ON *.* TO 'clustercheckuser'@'localhost' IDENTIFIED BY 'pass';
 
 ## MONITORING
 CREATE USER 'collectd'@'10.0.%' IDENTIFIED BY 'onebyonecomeback';
