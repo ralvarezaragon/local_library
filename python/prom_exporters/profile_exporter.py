@@ -39,7 +39,7 @@ def get_replace_row(row):
 start_http_server(8004)
 c = Counter('mysql_profile', 'Mysql profiling metrics', ['exported_instance', 'dbname', 'tname', 'query_type'])
 
-p = sub.Popen(('sudo', 'tcpdump', '-i', 'eno2', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
+p = sub.Popen(('sudo', 'tcpdump', '-i', 'enp8s0', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
 for row in iter(p.stdout.readline, b''):
   query = dict()
   query['exported_instance'] = socket.gethostname()
