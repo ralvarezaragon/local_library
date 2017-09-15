@@ -17,32 +17,24 @@ def option_menu():
   args = parser.parse_args()
   return args
 
+# Get menu parameters
 opt = option_menu()
-
-#conn = S3Connection(
-#    opt.access_key,
-#    opt.secret_key
-#)
-#bucket = conn.get_bucket('basebone.backups')
-#keys = bucket.list()
-#print keys
-
+# OPen S3 session wiht given credentials
 session = Session(
   aws_access_key_id=opt.access_key,
   aws_secret_access_key=opt.secret_key
 )
 s3 = session.resource('s3')
+# Open the bucket
 bucket = s3.Bucket('basebone.backups')
-
+keys = []
+# List the files within the desired folder
 for s3_file in bucket.objects.filter(Prefix='test_log'):
-   print(s3_file.key)
-     
-#for s3_file in bucket.objects.all(): 
-  #print(s3_file.key)  
-
-  # Get a Spark context and use it to parallelize the keys
-  #conf = SparkConf().setAppName("MyFileProcessingApp")
-  #sc = SparkContext(conf=conf)
+   keys.append(s3_file.key)
+print keys
+# Get a Spark context and use it to parallelize the keys
+#conf = SparkConf().setAppName("apptest1")
+#sc = SparkContext(conf=conf)
   #pkeys = sc.parallelize(keys)
   # Call the map step to handle reading in the file contents
   #activation = pkeys.flatMap(map_func)
