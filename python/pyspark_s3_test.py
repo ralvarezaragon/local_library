@@ -31,9 +31,10 @@ keys = []
 # List the files within the desired folder
 for s3_file in bucket.objects.filter(Prefix='test_log'):
    keys.append(s3_file.key)
+   for line in key.get_contents_as_string().splitlines():
+     print line
 
-for line in keys.get_contents_as_string().splitlines():
-  print line
+
 # Get a Spark context and use it to parallelize the keys
 #conf = SparkConf().setAppName("apptest1")
 #sc = SparkContext(conf=conf)
