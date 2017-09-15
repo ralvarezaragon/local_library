@@ -17,6 +17,17 @@ def option_menu():
   args = parser.parse_args()
   return args
 
+
+def map_func(key)
+  # Use the key to read in the file contents, split on line endings
+  for line in key.get_contents_as_string().splitlines():
+    # parse one line of json
+    j = json.loads(line)
+    if "user_id" in j && "event" in j:
+      if j['event'] == "event_we_care_about":
+        yield j['user_id'], j['event']
+                 
+                
 # Get menu parameters
 opt = option_menu()
 # OPen S3 session wiht given credentials
@@ -32,11 +43,13 @@ keys = []
 for s3_file in bucket.objects.filter(Prefix='test_log'):
    keys.append(s3_file.key)
 
+for line in keys.get_contents_as_string().splitlines():
+  print line
 # Get a Spark context and use it to parallelize the keys
-conf = SparkConf().setAppName("apptest1")
-sc = SparkContext(conf=conf)
-rdd = sc.parallelize(keys)
+#conf = SparkConf().setAppName("apptest1")
+#sc = SparkContext(conf=conf)
+#rdd = sc.parallelize(keys)
 
-print rdd
+
 # Call the map step to handle reading in the file contents
 #activation = pkeys.flatMap(map_func)
