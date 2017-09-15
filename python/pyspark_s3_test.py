@@ -35,8 +35,8 @@ opt = option_menu()
 # Get a Spark context and use it to parallelize the keys
 conf = SparkConf().setAppName("apptest1")
 sc = SparkContext(conf=conf)
-sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", opt.access_key)
-sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", opt.secret_key)
+#sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", opt.access_key)
+#sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", opt.secret_key)
 rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
 print rdd.count
 #rdd = sc.parallelize(keys)
