@@ -7,5 +7,5 @@ mysqldump ads_templates templates --single-transaction --quick --lock-tables=fal
 
 
 
-mysqldump -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_prod --single-transaction --quick --lock-tables=false > /tmp/output.sql
+mysqldump -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_dev --single-transaction --quick --lock-tables=false > /tmp/output.sql
 mysql -h bbcl-product-prod.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_prod < /tmp/output.sql

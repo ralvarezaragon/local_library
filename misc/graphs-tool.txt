@@ -6,6 +6,8 @@ docker run -itd \
 --ip 172.0.0.2 \
 --name prometheus \
 -v /opt/graph-tool/prometheus.yml:/etc/prometheus/prometheus.yml \
+--cpus="3.0" \
+--memory="10000m" \
 prom/prometheus \
   -config.file=/etc/prometheus/prometheus.yml \
   -storage.local.path=/prometheus

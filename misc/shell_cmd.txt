@@ -1,2 +1,13 @@
 # tail log for daemons
 journalctl -fu docker.service
+
+
+# STATS CLUSTER HAS THESE VARS ENABLED AT 20170913-12:30
+set global userstat=1;
+SELECT * FROM INFORMATION_SCHEMA.INDEX_STATISTICS;
+set global log_queries_not_using_indexes =1;
+set global userstat=0;
+set global log_queries_not_using_indexes =0;
+
+
+/smsc/var/log# cat sub_inbound_2017.09.07.log | grep ST:Delivered >> /tmp/20170907_Delivered.log
