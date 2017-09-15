@@ -35,6 +35,8 @@ for s3_file in bucket.objects.filter(Prefix='test_log'):
 # Get a Spark context and use it to parallelize the keys
 conf = SparkConf().setAppName("apptest1")
 sc = SparkContext(conf=conf)
-pkeys = sc.parallelize(keys)
+rdd = sc.parallelize(keys)
+
+print rdd
 # Call the map step to handle reading in the file contents
 #activation = pkeys.flatMap(map_func)
