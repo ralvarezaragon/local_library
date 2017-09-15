@@ -2,7 +2,6 @@
 
 import argparse
 from pyspark import SparkContext, SparkConf
-from boto.s3.connection import S3Connection
 from boto3.session import Session
 
 def option_menu():
@@ -35,10 +34,11 @@ session = Session(
 s3 = session.resource('s3')
 bucket = s3.Bucket('basebone.backups')
 
-print bucket.list("test_log/", "/")
+
      
-#for s3_file in bucket.objects.all():
-#    print(s3_file.key)
+for s3_file in bucket.objects.all():
+  for key in bucket.objects.all():
+        print(key.key)  
 
   # Get a Spark context and use it to parallelize the keys
   #conf = SparkConf().setAppName("MyFileProcessingApp")
