@@ -37,9 +37,10 @@ conf = SparkConf().setAppName("apptest1")
 sc = SparkContext(conf=conf)
 #sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", opt.access_key)
 #sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", opt.secret_key)
-rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
+rdd0 = sc.textFile("s3n://basebone.backups/test_log/13.log")
+rdd = sc.parallelize(rdd0)
 print rdd.count
-#rdd = sc.parallelize(keys)
+
 
 
 # Call the map step to handle reading in the file contents
