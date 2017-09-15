@@ -33,7 +33,7 @@ session = Session(
   aws_secret_access_key=opt.secret_key
 )
 s3 = session.resource('s3')
-your_bucket = s3.Bucket('basebone.backups')
+your_bucket = s3.Bucket('basebone.backups/log_test')
 
 for s3_file in your_bucket.objects.all():
     print(s3_file.key)
