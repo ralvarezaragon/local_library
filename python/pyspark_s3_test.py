@@ -35,7 +35,7 @@ session = Session(
 s3 = session.resource('s3')
 bucket = s3.Bucket('basebone.backups')
 
-print list(bucket.list("test_log/", "/")
+print list(bucket.list("test_log/", "/"))
      
 #for s3_file in bucket.objects.all():
 #    print(s3_file.key)
