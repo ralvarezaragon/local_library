@@ -20,8 +20,8 @@ def option_menu():
 
 opt = option_menu()
 conn = S3Connection(
-    opt['access_key'],
-    opt['secret_key']
+    opt.access_key,
+    opt.secret_key
 )
 bucket = conn.get_bucket('basebone.backups')
 keys = bucket.list()
