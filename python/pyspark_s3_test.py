@@ -15,18 +15,7 @@ def option_menu():
     help="the secret for teh access key"
   )  
   args = parser.parse_args()
-  return args
-
-
-def map_func(key)
-  # Use the key to read in the file contents, split on line endings
-  for line in key.get_contents_as_string().splitlines():
-    # parse one line of json
-    j = json.loads(line)
-    if "user_id" in j && "event" in j:
-      if j['event'] == "event_we_care_about":
-        yield j['user_id'], j['event']
-                 
+  return args                 
                 
 # Get menu parameters
 opt = option_menu()
