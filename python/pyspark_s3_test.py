@@ -6,10 +6,6 @@ from boto.s3.connection import S3Connection
 
 
 def main():
-  conn = S3Connection(
-    'AKIAJJ57USNW7P2PBLBQ',
-    '04AhBkWEqvag83pE3/4qeZylXf8wOAnDDHQG9qtK'
-  )
   bucket = conn.get_bucket('basebone.backups')
   keys = bucket.list()
   print keys
