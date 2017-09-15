@@ -34,10 +34,11 @@ session = Session(
 s3 = session.resource('s3')
 bucket = s3.Bucket('basebone.backups')
 
-
+for s3_file in bucket.objects.filter(Prefix='test_log'):
+   print(s3_file.key)
      
-for s3_file in bucket.objects.all():  
-        print(s3_file)  
+#for s3_file in bucket.objects.all(): 
+  #print(s3_file.key)  
 
   # Get a Spark context and use it to parallelize the keys
   #conf = SparkConf().setAppName("MyFileProcessingApp")
