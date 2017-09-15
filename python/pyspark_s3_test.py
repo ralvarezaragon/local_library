@@ -31,12 +31,11 @@ keys = []
 # List the files within the desired folder
 for s3_file in bucket.objects.filter(Prefix='test_log'):
   keys.append(s3_file.key)
-  body = s3_file.get()['Body'].read()
-print body  
+  
 # Get a Spark context and use it to parallelize the keys
-#conf = SparkConf().setAppName("apptest1")
-#sc = SparkContext(conf=conf)
-#rdd = sc.textFile()
+conf = SparkConf().setAppName("apptest1")
+sc = SparkContext(conf=conf)
+sc.textFile("s3n://basebone.backups/test_log/13.log")
 #rdd = sc.parallelize(keys)
 
 
