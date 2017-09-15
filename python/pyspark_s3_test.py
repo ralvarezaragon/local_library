@@ -16,29 +16,35 @@ def option_menu():
   )  
   args = parser.parse_args()
   return args                 
-                
+           
+def distributed_file_read(file_key):
+    s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
+    body = s3_obj.get()['Body'].read()
+    return body
+        
+        
 # Get menu parameters
 opt = option_menu()
-# OPen S3 session wiht given credentials
-#session = Session(
-#  aws_access_key_id=opt.access_key,
-#  aws_secret_access_key=opt.secret_key
-#)
-#s3 = session.resource('s3')
+# Open S3 session wiht given credentials
+session = Session(
+  aws_access_key_id=opt.access_key,
+  aws_secret_access_key=opt.secret_key
+)
+s3 = session.resource('s3')
 # Open the bucket
-#bucket = s3.Bucket('basebone.backups')
-#keys = []
+bucket = s3.Bucket('basebone.backups')
+keys = []
 # List the files within the desired folder
-#for s3_file in bucket.objects.filter(Prefix='test_log'):
-#  keys.append(s3_file.key)
+for s3_file in bucket.objects.filter(Prefix='test_log'):
+  keys.append(s3_file.key)
   
 # Get a Spark context and use it to parallelize the keys
 conf = SparkConf().setAppName("apptest1")
 sc = SparkContext(conf=conf)
-#sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", opt.access_key)
-#sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", opt.secret_key)
-rdd0 = sc.textFile("s3n://basebone.backups/test_log/13.log")
-rdd = sc.parallelize(rdd0)
+
+pkeys = sc.parallelize(keys) #keyList is a list of s3 keys
+rdd = pkeys.flatMap(distributed_file_read)
+#rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
 print rdd.count
 
 
