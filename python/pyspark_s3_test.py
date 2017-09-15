@@ -31,7 +31,7 @@ keys = []
 # List the files within the desired folder
 for s3_file in bucket.objects.filter(Prefix='test_log'):
    keys.append(s3_file.key)
-   for line in key.get_contents_as_string().splitlines():
+   for line in s3_file.key.get_contents_as_string().splitlines():
      print line
 
 
