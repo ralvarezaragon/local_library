@@ -25,5 +25,4 @@ sc = SparkContext(conf=conf)
 
 sc_key = sc.parallelize(l_key)
 rdd = sc_key.flatMap(distributed_file_read)
-#print rdd.count
-print rdd.collect()
+print rdd.count()
