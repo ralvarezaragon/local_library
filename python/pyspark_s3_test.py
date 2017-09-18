@@ -3,13 +3,14 @@
 import argparse
 from pyspark import SparkContext, SparkConf
 import boto3
+import re
 
        
 def distributed_file_read(file_key):
   s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
   body = s3_obj.get()['Body'].read()
   # Cleanup rubbish chars
-  body.sub('[', '')
+  body = re.sub('[', '', body)
   # Split the body by lines so now we have a list of elements 
   l_res = body.splitlines()
   return l_res
