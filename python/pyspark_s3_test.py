@@ -38,7 +38,7 @@ l_key = []
 for s3_file in bucket.objects.filter(Prefix='test_log'):
   l_key.append(s3_file.key)
  
-print l_key[0]  
+print distributed_file_read(l_key[0])
 # Get a Spark context and use it to parallelize the keys
 #conf = SparkConf().setAppName("apptest1")
 #sc = SparkContext(conf=conf)
