@@ -8,11 +8,12 @@ import boto3
 def distributed_file_read(file_key):
     s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
     body = s3_obj.get()['Body'].read()
-    # Split the body by lines so now we ahve a list of elements
+    # Split the body by lines so now we have a list of elements
     res = body.splitlines()
+    res = res.split('>')
     return res
         
-        
+
 # Open the bucket
 s3 = boto3.resource('s3')
 bucket = s3.Bucket('basebone.backups')
@@ -28,6 +29,6 @@ sc = SparkContext(conf=conf)
 sc_key = sc.parallelize(l_key)
 rdd = sc_key.flatMap(distributed_file_read)
 print "  >>> Count of row: {0}".format(rdd.count())
-#print rdd.collect()
+print rdd.collect()
 
 #print distributed_file_read(l_key[0])
