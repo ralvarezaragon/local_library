@@ -17,7 +17,8 @@ def distributed_file_read(file_key):
   return l_res
 
 def split_line(line):
-  l_res = line.split(" ")  
+  l_res = line.split(" ")
+  l_res = filter(None, l_res)
   return l_res        
 
   
