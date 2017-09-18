@@ -21,10 +21,11 @@ for s3_file in bucket.objects.filter(Prefix='test_log'):
   print "  >>> New file added: {0}".format(s3_file.key)
  
 # Get a Spark context and use it to parallelize the keys
-conf = SparkConf().setAppName("apptest1")
-sc = SparkContext(conf=conf)
+#conf = SparkConf().setAppName("apptest1")
+#sc = SparkContext(conf=conf)
+#sc_key = sc.parallelize(l_key)
+#rdd = sc_key.flatMap(distributed_file_read)
+#print "  >>> Count of row: {0}".format(rdd.count())
+#print rdd.collect()
 
-sc_key = sc.parallelize(l_key)
-rdd = sc_key.flatMap(distributed_file_read)
-print "  >>> Count of row: {0}".format(rdd.count())
-print rdd.collect()
+print distributed_file_read(l_key[0])
