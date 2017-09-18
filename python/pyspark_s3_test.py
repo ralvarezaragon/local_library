@@ -8,12 +8,15 @@ import boto3
 def distributed_file_read(file_key):
   s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
   body = s3_obj.get()['Body'].read()
-  # Split the body by lines so now we have a list of elements
+  # Cleanup rubbish chars
+  l_res.sub('[', '')
+  # Split the body by lines so now we have a list of elements 
   l_res = body.splitlines()
   return l_res
         
+
 def split_text(line):
-  l_res = line.split("> ")
+  l_res = line.split("> ")  
   return l_res
   
   
