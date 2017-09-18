@@ -34,6 +34,6 @@ for s3_file in bucket.objects.filter(Prefix='test_log/'):
 #print "  >>> Count of row: {0}".format(rdd.count())
 #print rdd.collect()
 
-res = distributed_file_read(l_key[0])
+res = distributed_file_read(l_key[1])
 for r in res:
   print split_text(r)
