@@ -28,11 +28,11 @@ def distributed_file_read(file_key):
 # Get menu parameters
 opt = option_menu()
 # Open S3 session wiht given credentials
-session = boto3.session(
+aws_session = boto3.session(
   aws_access_key_id=opt.access_key,
   aws_secret_access_key=opt.secret_key
 )
-s3 = session.resource('s3')
+s3 = aws_session.resource('s3')
 # Open the bucket
 bucket = s3.Bucket('basebone.backups')
 keys = []
