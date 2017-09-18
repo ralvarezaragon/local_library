@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
 import argparse
+import boto3
 from pyspark import SparkContext, SparkConf
 from boto3.session import Session
-#import boto3
+
 
 def option_menu():
   parser = argparse.ArgumentParser()
