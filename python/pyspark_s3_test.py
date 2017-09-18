@@ -28,6 +28,6 @@ sc = SparkContext(conf=conf)
 sc_key = sc.parallelize(l_key)
 rdd = sc_key.flatMap(distributed_file_read)
 print "  >>> Count of row: {0}".format(rdd.count())
-print rdd.collect()
+#print rdd.collect()
 
 #print distributed_file_read(l_key[0])
