@@ -36,14 +36,14 @@ bucket = s3.Bucket('basebone.backups')
 keys = []
 # List the files within the desired folder
 for s3_file in bucket.objects.filter(Prefix='test_log'):
-  keys.append(s3_file.key)
+  l_key.append(s3_file.key)
  
-print key[0]  
+print l_key[0]  
 # Get a Spark context and use it to parallelize the keys
 #conf = SparkConf().setAppName("apptest1")
 #sc = SparkContext(conf=conf)
 
-#pkeys = sc.parallelize(keys) #keyList is a list of s3 keys
+#pkeys = sc.parallelize(l_key) #keyList is a list of s3 keys
 #rdd = pkeys.flatMap(distributed_file_read)
 #rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
 #print rdd.count
