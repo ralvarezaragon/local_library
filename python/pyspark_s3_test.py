@@ -38,7 +38,7 @@ sc_key = sc.parallelize(l_key)
 rdd = sc_key.flatMap(distributed_file_read)
 print "  >>> Count of row: {0}".format(rdd.count())
 rdd1 = rdd.map(split_line)
-print rdd1.collect()
+#print rdd1.collect()
 
 
 
