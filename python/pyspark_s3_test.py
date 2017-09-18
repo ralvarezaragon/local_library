@@ -14,12 +14,11 @@ def distributed_file_read(file_key):
   # Split the body by lines so now we have a list of elements 
   l_res = body.splitlines()
   return l_res
-        
 
-def split_text(line):
-  l_res = line.split("> ")  
-  return l_res
-  
+def split_line(line):
+  l_res = r.split("> ")
+  return l_res        
+
   
 # Open the bucket
 s3 = boto3.resource('s3')
@@ -31,13 +30,13 @@ for s3_file in bucket.objects.filter(Prefix='test_log/'):
   print "  >>> New file added: {0}".format(s3_file.key)
  
 # Get a Spark context and use it to parallelize the keys
-#conf = SparkConf().setAppName("apptest1")
-#sc = SparkContext(conf=conf)
-#sc_key = sc.parallelize(l_key)
-#rdd = sc_key.flatMap(distributed_file_read)
-#print "  >>> Count of row: {0}".format(rdd.count())
-#print rdd.collect()
+conf = SparkConf().setAppName("apptest1")
+sc = SparkContext(conf=conf)
+sc_key = sc.parallelize(l_key)
+rdd = sc_key.flatMap(distributed_file_read)
+print "  >>> Count of row: {0}".format(rdd.count())
+rdd1 = rdd.map(split_line)
+print rdd1.collect()
 
-res = distributed_file_read(l_key[1])
-for r in res:
-  print split_text(r)
+
+
