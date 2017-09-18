@@ -1,10 +1,9 @@
 #!/usr/bin/python
 
 import argparse
-import boto3
 from pyspark import SparkContext, SparkConf
-#from boto3.session import Session
-
+from boto3.session import b3_ses
+from boto3.resource import b3_res
 
 def option_menu():
   parser = argparse.ArgumentParser()
@@ -20,7 +19,7 @@ def option_menu():
   return args                 
            
 def distributed_file_read(file_key):
-    s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
+    s3_obj = b3_res('s3').Object(bucket_name='basebone.backups', key=file_key)
     body = s3_obj.get()['Body'].read()
     return body
         
@@ -28,7 +27,7 @@ def distributed_file_read(file_key):
 # Get menu parameters
 opt = option_menu()
 # Open S3 session wiht given credentials
-aws_session = boto3.session(
+aws_session = b3_ses(
   aws_access_key_id=opt.access_key,
   aws_secret_access_key=opt.secret_key
 )
