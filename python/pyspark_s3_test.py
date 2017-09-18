@@ -33,7 +33,7 @@ session = Session(
 s3 = session.resource('s3')
 # Open the bucket
 bucket = s3.Bucket('basebone.backups')
-keys = []
+l_key = []
 # List the files within the desired folder
 for s3_file in bucket.objects.filter(Prefix='test_log'):
   l_key.append(s3_file.key)
