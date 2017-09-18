@@ -45,8 +45,8 @@ sc = SparkContext(conf=conf)
 pkeys = sc.parallelize(keys) #keyList is a list of s3 keys
 rdd = pkeys.flatMap(distributed_file_read)
 #rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
-print rdd.count
-
+#print rdd.count
+print myRDD.take(1)
 
 
 # Call the map step to handle reading in the file contents
