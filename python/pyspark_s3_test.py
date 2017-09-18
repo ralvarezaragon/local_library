@@ -4,19 +4,7 @@ import argparse
 from pyspark import SparkContext, SparkConf
 import boto3
 
-def option_menu():
-  parser = argparse.ArgumentParser()
-  parser.add_argument(
-    '--access_key', metavar='a', dest='access_key', type=str,
-    help="Identify yourself with the key"
-  )
-  parser.add_argument(
-    '--secret_key', metavar='s', dest='secret_key', type=str, 
-    help="the secret for teh access key"
-  )  
-  args = parser.parse_args()
-  return args                 
-           
+       
 def distributed_file_read(file_key):
     s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
     body = s3_obj.get()['Body'].read()
