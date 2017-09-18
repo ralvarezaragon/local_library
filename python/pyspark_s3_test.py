@@ -18,7 +18,7 @@ s3 = boto3.resource('s3')
 bucket = s3.Bucket('basebone.backups')
 l_key = []
 # List the files within the desired folder for the given bucket
-for s3_file in bucket.objects.filter(Prefix='test_log'):
+for s3_file in bucket.objects.filter(Prefix='test_log/'):
   l_key.append(s3_file.key)
   print "  >>> New file added: {0}".format(s3_file.key)
  
