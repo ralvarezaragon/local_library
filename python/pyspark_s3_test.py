@@ -11,8 +11,6 @@ def distributed_file_read(file_key):
     return body
         
         
-# Get menu parameters
-opt = option_menu()
 # Open the bucket
 s3 = boto3.resource('s3')
 bucket = s3.Bucket('basebone.backups')
