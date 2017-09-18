@@ -2,7 +2,7 @@
 
 import argparse
 from pyspark import SparkContext, SparkConf
-from boto3.session import Session
+import boto3
 
 def option_menu():
   parser = argparse.ArgumentParser()
@@ -25,16 +25,11 @@ def distributed_file_read(file_key):
         
 # Get menu parameters
 opt = option_menu()
-# Open S3 session wiht given credentials
-session = Session(
-  aws_access_key_id=opt.access_key,
-  aws_secret_access_key=opt.secret_key
-)
-s3 = session.resource('s3')
 # Open the bucket
+s3 = boto3.resource('s3')
 bucket = s3.Bucket('basebone.backups')
 l_key = []
-# List the files within the desired folder
+# List the files within the desired folder for the given bucket
 for s3_file in bucket.objects.filter(Prefix='test_log'):
   l_key.append(s3_file.key)
  
@@ -47,8 +42,3 @@ print distributed_file_read(l_key[0])
 #rdd = pkeys.flatMap(distributed_file_read)
 #rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
 #print rdd.count
-
-
-
-# Call the map step to handle reading in the file contents
-#activation = pkeys.flatMap(map_func)
