@@ -2,7 +2,7 @@
 
 import argparse
 from pyspark import SparkContext, SparkConf
-#from boto3.session import Session
+from boto3.session import Session
 import boto3
 
 def option_menu():
@@ -27,7 +27,7 @@ def distributed_file_read(file_key):
 # Get menu parameters
 opt = option_menu()
 # Open S3 session wiht given credentials
-session = boto3.session.Session(
+session = Session(
   aws_access_key_id=opt.access_key,
   aws_secret_access_key=opt.secret_key
 )
