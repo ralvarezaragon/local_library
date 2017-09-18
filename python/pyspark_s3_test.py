@@ -3,7 +3,7 @@
 import argparse
 from pyspark import SparkContext, SparkConf
 from boto3.session import Session
-from boto3.resource import Resource
+from boto3.resource import Resources
 
 def option_menu():
   parser = argparse.ArgumentParser()
