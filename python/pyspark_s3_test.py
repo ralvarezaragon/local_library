@@ -19,12 +19,10 @@ l_key = []
 for s3_file in bucket.objects.filter(Prefix='test_log'):
   l_key.append(s3_file.key)
  
-print distributed_file_read(l_key[0])
 # Get a Spark context and use it to parallelize the keys
-#conf = SparkConf().setAppName("apptest1")
-#sc = SparkContext(conf=conf)
+conf = SparkConf().setAppName("apptest1")
+sc = SparkContext(conf=conf)
 
-#pkeys = sc.parallelize(l_key) #keyList is a list of s3 keys
-#rdd = pkeys.flatMap(distributed_file_read)
-#rdd = sc.textFile("s3n://basebone.backups/test_log/13.log")
-#print rdd.count
+sc_key = sc.parallelize(l_key)
+rdd = sc_key.flatMap(distributed_file_read)
+print rdd.count
