@@ -8,8 +8,8 @@ import boto3
 def distributed_file_read(file_key):
     s3_obj = boto3.resource('s3').Object(bucket_name='basebone.backups', key=file_key)
     body = s3_obj.get()['Body'].read()
-    body.splitlines()
-    return body
+    res = body.splitlines()
+    return res
         
         
 # Open the bucket
