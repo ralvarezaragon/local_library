@@ -39,7 +39,11 @@ with open(log_file) as f:
     if line:
       query = dict()
       #print line      
-      row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (.*\*\/)  (\w*)', line)      
+      row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (.*\*\/)  (\w*)', line)
+      try:
+        ts = row_substr.group(1)
+      except Exception as e:
+        ts = ''
       query['source'] = 'PHP'
       try:
         query['DUNNO'] = row_substr.group(2)
@@ -62,4 +66,4 @@ with open(log_file) as f:
       except Exception as e:
         query['type'] = ''
       c.labels(source = query['source'], target = query['target'], dbname = query['dbname'], module = query['module'], query_type = query['type']).inc()      
-      print query
+      print "{0}.- {1}".format(ts, query)
