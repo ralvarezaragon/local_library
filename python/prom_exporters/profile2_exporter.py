@@ -28,7 +28,7 @@ def parse_ip(par):
 	return switcher.get(par, par)
 
 
-start_http_server(8004)
+start_http_server(8005)
 c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['source', 'target', 'dbname', 'module', 'query_type'])
 
 log_file = max(glob.iglob('/smsc/var/log/mysql_php_*.log'), key=os.path.getctime)
