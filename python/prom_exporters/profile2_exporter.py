@@ -38,13 +38,28 @@ with open(log_file) as f:
     line = f.readline()
     if line:
       query = dict()
-      #print line
+      #print line      
       row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (.*\*\/)  (\w*)', line)      
       query['source'] = 'PHP'
-      query['DUNNO'] = row_substr.group(2)
-      query['module'] = row_substr.group(5)
-      query['target'] = parse_ip(row_substr.group(6))
-      query['dbname'] = row_substr.group(7)
-      query['type'] = row_substr.group(9)
+      try:
+        query['DUNNO'] = row_substr.group(2)
+      except Exception as e:
+        query['DUNNO'] = ''
+      try:
+        query['module'] = row_substr.group(5)
+      except Exception as e:
+        query['module'] = ''
+      try:  
+        query['target'] = parse_ip(row_substr.group(6))
+      except Exception as e:
+        query['target'] = ''
+      try:
+        query['dbname'] = row_substr.group(7)
+      except Exception as e:
+        query['dbname'] = ''
+      try:
+        query['type'] = row_substr.group(9)
+      except Exception as e:
+        query['type'] = ''
       c.labels(source = query['source'], target = query['target'], dbname = query['dbname'], module = query['module'], query_type = query['type']).inc()      
       print query
