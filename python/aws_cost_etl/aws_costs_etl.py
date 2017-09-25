@@ -31,21 +31,22 @@ def add_to_json(p, new_data):
  
 
 def uncompress_files(fl):
-    for root, dirnames, filenames in os.walk("/tmp/aws_out/"):
-        if root not in fl["filename"]:
-            for filename in fnmatch.filter(filenames, '*.csv.gz'):                 
+    for root, dirnames, filenames in os.walk("/tmp/aws_out/"):           
+            for filename in fnmatch.filter(filenames, '*.csv.gz'):                
                 full_path = "{0}/{1}".format(root, filename)
-                os.system("gunzip {0}".format(full_path))
-                print "{0} uncompressed".format(full_path)
+                if full_path not in fl["filename"]:
+                    os.system("gunzip {0}".format(full_path))
+                    add_to_json(f_path, full_path)
+                    print "{0} uncompressed".format(full_path)
             
 
 def process_csv(df, fl):
     for root, dirnames, filenames in os.walk("/tmp/aws_out/"):
-        if root not in fl["filename"]:
-            for filename in fnmatch.filter(filenames, '*.csv'):            
-                uncompressed_csv = "{0}/{1}".format(root, filename)
+        for filename in fnmatch.filter(filenames, '*.csv'):            
+            uncompressed_csv = "{0}/{1}".format(root, filename)
+            if uncompressed_csv not in fl["filename"]:
                 csv_data = pd.read_csv(uncompressed_csv)
-                df = pd.concat([df, csv_data])                
+                df = pd.concat([df, csv_data])             
                 print "{0} processed".format(uncompressed_csv)
     return df        
             
@@ -60,7 +61,7 @@ if __name__ == '__main__':
     final_df = pd.DataFrame()    
     # Read each csv.gz file and uncompress
     uncompress_files(existing_file_list)
-    # Process teh uncrompressed files into a data frame
+    # Process the uncrompressed files into a data frame
     final_df = process_csv(final_df, existing_file_list)    
     final_df = final_df.drop_duplicates(subset=['identity/LineItemId','lineItem/UsageStartDate'], keep='first')
     output_filename = 'aws_costs_{0}.csv'.format(datetime.datetime.now().date())

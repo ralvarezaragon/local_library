@@ -2,7 +2,7 @@
 CREATE USER 'nobody'@'10.0.%';
 GRANT ALL PRIVILEGES ON *.* TO 'nobody'@'10.0.%';
 ## ROOT
-CREATE USER 'root'@'10.0.%' IDENTIFIED BY 'pass';
+CREATE USER 'root'@'10.0.%' IDENTIFIED BY 'letmeinbro';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.0.%' WITH GRANT OPTION;
 
 ## ADMIN 

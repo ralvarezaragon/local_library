@@ -1,5 +1,8 @@
 library(shiny)
 library(shinydashboard)
+library(ggplot2)
+library(dplyr)
+library(data.table)
 
 header <- dashboardHeader(
   title = "AWS cost analyzer"
@@ -12,28 +15,37 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
   fluidRow(
     box(
-      width = 12,
+      width = 10,
       status = "primary", 
       solidHeader = F,
       collapsible = F,
-      infoBoxOutput("total_this_month"),
-      infoBoxOutput("prod_this_month")
+      plotOutput("multiplot")
     ),
+    
     box(
-      width = 3,
-      title = "Monthly costs per country",
+      width = 2,
       status = "primary", 
-      solidHeader = TRUE,
-      collapsible = TRUE,
-      plotlyOutput("cost_monthly")
-    ),
-    box(
-    width = 9,
-    status = "primary", 
-    solidHeader = TRUE,
-    collapsible = TRUE,
-    title = "Daily costs",
-    plotlyOutput("cost_daily")
+      solidHeader = F,
+      collapsible = F,
+      selectInput(
+        "date_filter", 
+        "Date range",
+        c(
+          "Monthly" = "monthly",
+          "Daily" = "daily"
+        )
+      ),
+      selectInput(
+        "color_sel", 
+        "Breakdown options",
+        c(
+          "None" = "1",
+          "By country" = "resourcetags_user_area",
+          "By environment" = "resourcetags_user_dtap",
+          "By service" = "lineitem_productcode"
+        )
+      ),
+      tableOutput('t_result')
     )
   )
 )

@@ -13,6 +13,14 @@ time ./mydumper/mydumper \
 	--verbose=3 \
 	--outputdir='/tmp/out_pnl'
 
-
+time ./mydumper/myloader \
+  --host=10.0.1.102 \
+  --user=root \
+  --password=letmeinbro \
+  --directory=/$DB_DUMP/tmp/out_stats \
+  --queries-per-transaction=50000 \
+  --threads=10 \
+  --compress-protocol \
+  --verbose=3
 
 ./import_files_loop.sh -h 10.0.3.5 -d esme_statistics_monthly -f out_pnl -s 10

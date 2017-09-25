@@ -21,7 +21,7 @@ docker run -itd \
 --restart always \
 -v /graph-tool/grafana:/var/lib/grafana \
 -e "GF_SECURITY_ADMIN_PASSWORD=admin" \
-grafana/grafana
+grafana_20170925
 
 docker run -d \
 --name collectd-exporter \
@@ -32,3 +32,4 @@ docker run -d \
 -p 25826:25826/udp \
 prom/collectd-exporter \
   --collectd.listen-address=":25826"
+
