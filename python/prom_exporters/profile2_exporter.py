@@ -35,7 +35,7 @@ p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdo
 for line in iter(p.stdout.readline, b''):
   if line.find('MYSQL_PHP') > -1 or line.find('MYSQL_JAVA') > -1:
     query = dict()
-    row_substr = re.search('^(.*)(app2) (\w+). (\w+) (\w+). (\S+) (\w+) (\w+) (.*\*\/) (\S*)', line)
+    row_substr = re.search('^(.*) (\w+) (\w+). (\w+) (\w+). (\S+) (\w+) (\w+) (.*\*\/) (\S*)', line)
     try:
       ts = row_substr.group(1)
     except Exception as e:
