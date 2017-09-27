@@ -37,8 +37,8 @@ hour_file = int(hour_substr.group(2))
 
 with open(log_file) as f:
   while True:
-		hour_now = int(datetime.date.now().hour)
-		line = f.readline()    
+    hour_now = int(datetime.date.now().hour)
+    line = f.readline()
     print "{0} | {1}".format(hour_file, hour_now)
     if (line and hour_file == hour_now):
       query = dict()
