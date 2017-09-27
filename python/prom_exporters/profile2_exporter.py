@@ -33,35 +33,36 @@ c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['source'
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdout=sub.PIPE)
 
 for line in iter(p.stdout.readline, b''):
-  query = dict()
-  row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
-  try:
-    ts = row_substr.group(1)
-  except Exception as e:
-    ts = ''
-  query['source'] = 'PHP'
-  try:
-    query['sender'] = row_substr.group(2)
-  except Exception as e:
-    query['sender'] = ''
-  try:
-    query['module'] = row_substr.group(5)
-  except Exception as e:
-    query['module'] = ''
-  try:
-    query['target'] = parse_ip(row_substr.group(6))
-  except Exception as e:
-    query['target'] = ''
-  try:
-    query['dbname'] = row_substr.group(7)
-  except Exception as e:
-    query['dbname'] = ''
-  try:
-    query['type'] = row_substr.group(10)
-  except Exception as e:
-    query['type'] = ''
-  #print "{0}.- {1}".format(ts, query)
-  print line
+  if line.find('MYSQL_PHP') > -1 or line.find('MYSQL_JAVA') > -1:
+    query = dict()
+    row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
+    try:
+      ts = row_substr.group(1)
+    except Exception as e:
+      ts = ''
+    query['source'] = 'PHP'
+    try:
+      query['sender'] = row_substr.group(2)
+    except Exception as e:
+      query['sender'] = ''
+    try:
+      query['module'] = row_substr.group(5)
+    except Exception as e:
+      query['module'] = ''
+    try:
+      query['target'] = parse_ip(row_substr.group(6))
+    except Exception as e:
+      query['target'] = ''
+    try:
+      query['dbname'] = row_substr.group(7)
+    except Exception as e:
+      query['dbname'] = ''
+    try:
+      query['type'] = row_substr.group(10)
+    except Exception as e:
+      query['type'] = ''
+    #print "{0}.- {1}".format(ts, query)
+    print line
 
 
 
