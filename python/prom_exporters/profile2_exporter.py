@@ -30,7 +30,7 @@ def parse_ip(par):
 start_http_server(8005)
 c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['source', 'target', 'dbname', 'module', 'query_type'])
 
-p = sub.Popen(('sudo', 'tcpdump', '-i', 'enp8s0', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
+p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdout=sub.PIPE)
 
 for line in iter(p.stdout.readline, b''):
   query = dict()
