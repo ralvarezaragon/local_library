@@ -62,18 +62,20 @@ for line in iter(p.stdout.readline, b''):
       err = 1
     try:
       query['type'] = row_substr.group(10)
+      err = 0
     except Exception as e:
       err = 1
     print query
-    c.labels(
-      sender = query['sender'],
-      source = query['source'],
-      target = query['target'],
-      dbname = query['dbname'],
-      module = query['module'],
-      hash = query['hash'],
-      query_type = query['type']
-    ).inc()
+    if err != 1:
+      c.labels(
+        sender = query['sender'],
+        source = query['source'],
+        target = query['target'],
+        dbname = query['dbname'],
+        module = query['module'],
+        hash = query['hash'],
+        query_type = query['type']
+      ).inc()
 
 
 
