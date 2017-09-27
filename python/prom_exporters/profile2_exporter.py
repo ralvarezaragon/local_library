@@ -60,7 +60,7 @@ for line in iter(p.stdout.readline, b''):
     try:
       query['type'] = row_substr.group(10)
     except Exception as e:
-      query['type'] = ''
+      query['type'] = line
     print "{0}.- {1}".format(ts, query)
     #print line
 
