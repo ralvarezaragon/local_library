@@ -39,7 +39,7 @@ with open(log_file) as f:
     if line:
       query = dict()
       #print line      
-      row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/)  (\w*)', line)
+      row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
       try:
         ts = row_substr.group(1)
       except Exception as e:
