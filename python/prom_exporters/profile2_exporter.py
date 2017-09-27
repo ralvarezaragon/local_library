@@ -40,7 +40,7 @@ for line in iter(p.stdout.readline, b''):
       ts = row_substr.group(1)
     except Exception as e:
       ts = ''
-    query['source'] = 'PHP'
+    query['source'] = row_substr.group(4)
     try:
       query['sender'] = row_substr.group(2)
     except Exception as e:
@@ -58,10 +58,14 @@ for line in iter(p.stdout.readline, b''):
     except Exception as e:
       query['dbname'] = ''
     try:
+      query['hash'] = row_substr.group(8)
+    except Exception as e:
+      query['hash'] = ''
+    try:
       query['type'] = row_substr.group(10)
     except Exception as e:
       query['type'] = line
-    print "{0}.- {1}".format(ts, query)
+    print query
     #print line
 
 
