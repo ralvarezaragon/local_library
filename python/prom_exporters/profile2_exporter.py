@@ -40,7 +40,7 @@ with open(log_file) as f:
 		hour_now = int(datetime.date.now().hour)
 		line = f.readline()    
     print "{0} | {1}".format(hour_file, hour_now)
-    if line and hour_file == hour_now:
+    if (line and hour_file == hour_now):
       query = dict()
       #print line      
       row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
