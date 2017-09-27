@@ -1,8 +1,7 @@
 #!/usr/bin/python
 import re
 from prometheus_client import start_http_server, Summary, Counter
-import glob, os
-import datetime
+import subprocess as sub
 
 def parse_ip(par):
 	switcher = {
@@ -31,44 +30,45 @@ def parse_ip(par):
 start_http_server(8005)
 c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['source', 'target', 'dbname', 'module', 'query_type'])
 
-log_file = max(glob.iglob('/smsc/var/log/mysql_php_*.log'), key=os.path.getctime)
-hour_substr = re.search('^(.smsc.var.log.mysql_php_\d+.\d+.\d+-)(\d+)(.log)', log_file)
-hour_file = int(hour_substr.group(2))
+p = sub.Popen(('sudo', 'tcpdump', '-i', 'enp8s0', '-s', '0', '-l', '-w', '-', 'dst', 'port 3306'), stdout=sub.PIPE)
+
+for line in iter(p.stdout.readline, b''):
+  query = dict()
+  row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
+  try:
+    ts = row_substr.group(1)
+  except Exception as e:
+    ts = ''
+  query['source'] = 'PHP'
+  try:
+    query['sender'] = row_substr.group(2)
+  except Exception as e:
+    query['sender'] = ''
+  try:
+    query['module'] = row_substr.group(5)
+  except Exception as e:
+    query['module'] = ''
+  try:
+    query['target'] = parse_ip(row_substr.group(6))
+  except Exception as e:
+    query['target'] = ''
+  try:
+    query['dbname'] = row_substr.group(7)
+  except Exception as e:
+    query['dbname'] = ''
+  try:
+    query['type'] = row_substr.group(10)
+  except Exception as e:
+    query['type'] = ''
+  #print "{0}.- {1}".format(ts, query)
+  print line
 
 
-while True:
-  hour_now = int(datetime.datetime.now().hour)
-  line = log_file.readline()
-  if hour_file == hour_now:
-    query = dict()
-    #print line
-    row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
-    try:
-      ts = row_substr.group(1)
-    except Exception as e:
-      ts = ''
-    query['source'] = 'PHP'
-    try:
-      query['DUNNO'] = row_substr.group(2)
-    except Exception as e:
-      query['DUNNO'] = ''
-    try:
-      query['module'] = row_substr.group(5)
-    except Exception as e:
-      query['module'] = ''
-    try:
-      query['target'] = parse_ip(row_substr.group(6))
-    except Exception as e:
-      query['target'] = ''
-    try:
-      query['dbname'] = row_substr.group(7)
-    except Exception as e:
-      query['dbname'] = ''
-    try:
-      query['type'] = row_substr.group(9)
-    except Exception as e:
-      query['type'] = ''
-    c.labels(source = query['source'], target = query['target'], dbname = query['dbname'], module = query['module'], query_type = query['type']).inc()
-    print "{0}.- {1}".format(ts, query)
-  else:
-    break
+
+#c.labels(
+#     source=query['source'],
+#      target=query['target'],
+#      dbname=query['dbname'],
+#      module=query['module'],
+#      query_type=query['type']
+#    ).inc()
