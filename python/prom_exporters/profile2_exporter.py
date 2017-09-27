@@ -2,7 +2,7 @@
 import re
 from prometheus_client import start_http_server, Summary, Counter
 import glob, os
-
+import datetime
 
 def parse_ip(par):
 	switcher = {
@@ -32,11 +32,15 @@ start_http_server(8005)
 c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['source', 'target', 'dbname', 'module', 'query_type'])
 
 log_file = max(glob.iglob('/smsc/var/log/mysql_php_*.log'), key=os.path.getctime)
+hour_substr = re.search('^(.smsc.var.log.mysql_php_\d+.\d+.\d+-)(\d+)(.log)', log_file)
+hour_file = int(hour_substr.group(2))
 
 with open(log_file) as f:
   while True:
-    line = f.readline()
-    if line:
+		hour_now = int(datetime.date.now().hour)
+		line = f.readline()    
+    print "{0} | {1}".format(hour_file, hour_now)
+    if line and hour_file == hour_now:
       query = dict()
       #print line      
       row_substr = re.search('^([\d:]*) (\S*) (\S*)  (\S*) (\w*): ([\d\.]*) (\S*) (\S*) (.*\*\/) (\S*)', line)
