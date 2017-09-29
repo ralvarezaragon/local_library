@@ -2,6 +2,8 @@
 import re
 from prometheus_client import start_http_server, Summary, Counter
 import subprocess as sub
+import logging
+
 
 def parse_ip(par):
 	switcher = {
@@ -26,6 +28,12 @@ def parse_ip(par):
 	}	
 	return switcher.get(par, par)
 
+# Logger config
+logging.basicConfig(
+  format="%(asctime)s::%(levelname)s::%(message)s",
+  filename=today.strftime("/var/log/query-profiler-error.log"),
+  level=logging.INFO
+)
 
 start_http_server(8005)
 c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['sender', 'source', 'target', 'dbname', 'module', 'query_type'])
@@ -78,6 +86,8 @@ for line in iter(p.stdout.readline, b''):
        # hash = query['hash'],
         query_type = query['type']
       ).inc()
+    else:
+      logging.error("%s", str(line))
 
 
 
