@@ -68,15 +68,16 @@ for line in iter(p.stdout.readline, b''):
     except Exception as e:
       err = 1
     print query
-    c.labels(
-      sender = query['sender'],
-      source = query['source'],
-      target = query['target'],
-      dbname = query['dbname'],
-      module = query['module'],
-     # hash = query['hash'],
-      query_type = query['type']
-    ).inc()
+    if err != 1:
+      c.labels(
+        sender = query['sender'],
+        source = query['source'],
+        target = query['target'],
+        dbname = query['dbname'],
+        module = query['module'],
+       # hash = query['hash'],
+        query_type = query['type']
+      ).inc()
 
 
 
