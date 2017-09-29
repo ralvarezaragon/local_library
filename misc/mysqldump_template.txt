@@ -13,3 +13,5 @@ mysql -h 10.0.3.40 product_prod < /tmp/output.sql
 
 mysqldump esme_system sm_companies --single-transaction --quick --lock-tables=false > /tmp/sm_companies.sql
 mysql -h bbcl-system-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD esme_system < /tmp/sm_companies.sql
+
+mysqldump admin_archive hoot_postback_temp --no-create-info --single-transaction --quick --lock-tables=false > /tmp/hoot_postback_temp.sql

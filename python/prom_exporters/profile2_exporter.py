@@ -28,7 +28,7 @@ def parse_ip(par):
 
 
 start_http_server(8005)
-c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['sender', 'source', 'target', 'dbname', 'module', 'hash', 'query_type'])
+c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['sender', 'source', 'target', 'dbname', 'module', 'query_type'])
 
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdout=sub.PIPE)
 
@@ -57,10 +57,10 @@ for line in iter(p.stdout.readline, b''):
       query['dbname'] = row_substr.group(7)
     except Exception as e:
       err = 1
-    try:
-      query['hash'] = row_substr.group(8)
-    except Exception as e:
-      err = 1
+    #try:
+    #  query['hash'] = row_substr.group(8)
+    #except Exception as e:
+    #  err = 1
     try:
       query['type'] = row_substr.group(10)
       err = 0
@@ -73,7 +73,7 @@ for line in iter(p.stdout.readline, b''):
       target = query['target'],
       dbname = query['dbname'],
       module = query['module'],
-      hash = query['hash'],
+     # hash = query['hash'],
       query_type = query['type']
     ).inc()
 
