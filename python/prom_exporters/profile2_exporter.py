@@ -30,9 +30,9 @@ def parse_ip(par):
 
 # Logger config
 logging.basicConfig(
-  format="%(asctime)s::%(levelname)s::%(message)s",
-  filename=today.strftime("/var/log/query-profiler-error.log"),
-  level=logging.INFO
+  format = "%(asctime)s::%(levelname)s::%(message)s",
+  filename = "/var/log/query-profiler-error.log",
+  level = logging.INFO
 )
 
 start_http_server(8005)
