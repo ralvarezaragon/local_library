@@ -38,7 +38,7 @@ for line in iter(p.stdout.readline, b''):
     query = dict()
     row_substr = re.search('^(.*) (\w+) (\w+). (\w+) (\w+). (\S+) (\w+) (\w+) (.*\*\/) (\S*)', line)
     try:
-      source = row_substr.group(4)
+      query['source'] = row_substr.group(4)
     except Exception as e:
       err = 1
     try:
