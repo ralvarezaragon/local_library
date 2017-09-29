@@ -43,7 +43,8 @@ p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdo
 for line in iter(p.stdout.readline, b''):
   if line.find('MYSQL_PHP TRAF') > -1:
     print "========================================"
-    print line
+    #print line
+    err = 0
     query = dict()
     row_substr = re.search('^(.*) (\w+) (\w+). (\w+) (\w+). (\S+) (\w+) (\w+) (.*\*\/) (\S*)', line)
     try:
@@ -72,11 +73,10 @@ for line in iter(p.stdout.readline, b''):
     #  err = 1
     try:
       query['type'] = row_substr.group(10)
-      err = 0
     except Exception as e:
       err = 1
-    print query
-    if err != 1:
+    if err == 0:
+      print query
       c.labels(
         sender = query['sender'],
         source = query['source'],
