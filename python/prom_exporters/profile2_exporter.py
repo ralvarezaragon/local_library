@@ -33,7 +33,7 @@ c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['sender'
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdout=sub.PIPE)
 
 for line in iter(p.stdout.readline, b''):
-  if line.find('MYSQL_PHP') > -1:
+  if line.find('MYSQL_PHP TRAF') > -1:
     print line
     query = dict()
     row_substr = re.search('^(.*) (\w+) (\w+). (\w+) (\w+). (\S+) (\w+) (\w+) (.*\*\/) (\S*)', line)
