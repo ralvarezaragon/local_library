@@ -127,7 +127,7 @@ for line in iter(p.stdout.readline, b''):
         module = query['module'],
         query_type = query['type']
       ).inc()
-    else:
+    else: 
       logging.error("%s", str(line))
 
 
