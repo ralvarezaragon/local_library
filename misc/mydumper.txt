@@ -19,7 +19,8 @@ time ./mydumper/myloader \
   --password=letmeinbro \
   --directory=/$DB_DUMP/tmp/out_stats \
   --queries-per-transaction=50000 \
-  --threads=10 \
+  --threads=3 \
+  --enable-binlog=1 \
   --compress-protocol \
   --verbose=3
 

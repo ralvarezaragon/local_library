@@ -41,8 +41,7 @@ c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['sender'
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdout=sub.PIPE)
 
 for line in iter(p.stdout.readline, b''):
-  if line.find('MYSQL_PHP TRAF') > -1:
-    print "========================================"
+  if line.find('MYSQL_PHP TRAF') > -1 or line.find('MYSQL_PHP PROD') > -1:
     #print line
     err = 0
     query = dict()
