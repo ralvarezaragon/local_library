@@ -41,7 +41,7 @@ c = Counter('mysql_profile2', 'Mysql profiling metrics from PHP logs', ['sender'
 p = sub.Popen(('sudo', 'tcpdump', '-i', 'em2', '-s', '0', '-l', '-w', '-'), stdout=sub.PIPE)
 
 for line in iter(p.stdout.readline, b''):
-  if line.find('MYSQL_PHP TRAF') > -1 or line.find('MYSQL_PHP PROD') > -1:
+  if line.find('MYSQL_PHP TRAF') > -1:
     #print line
     err = 0
     query = dict()
@@ -83,6 +83,48 @@ for line in iter(p.stdout.readline, b''):
         dbname = query['dbname'],
         module = query['module'],
        # hash = query['hash'],
+        query_type = query['type']
+      ).inc()
+    else:
+      logging.error("%s", str(line))
+
+  if line.find('MYSQL_PHP PRODUCT') > -1:
+    #print line
+    err = 0
+    query = dict()
+    row_substr = re.search('^(.*) (\w+) (\w+). (\w+) (\w+). (\S+) (\w+) (.*\*\/) (\S*)', line)
+    try:
+      query['source'] = row_substr.group(4)
+    except Exception as e:
+      err = 1
+    try:
+      query['sender'] = row_substr.group(2)
+    except Exception as e:
+      err = 1
+    try:
+      query['module'] = row_substr.group(5)
+    except Exception as e:
+      err = 1
+    try:
+      query['target'] = parse_ip(row_substr.group(6))
+    except Exception as e:
+      err = 1
+    try:
+      query['dbname'] = row_substr.group(7)
+    except Exception as e:
+      err = 1
+    try:
+      query['type'] = row_substr.group(9)
+    except Exception as e:
+      err = 1
+    if err == 0:
+      print query
+      c.labels(
+        sender = query['sender'],
+        source = query['source'],
+        target = query['target'],
+        dbname = query['dbname'],
+        module = query['module'],
         query_type = query['type']
       ).inc()
     else:
