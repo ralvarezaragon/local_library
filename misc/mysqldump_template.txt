@@ -7,7 +7,7 @@ mysqldump ads_templates templates --single-transaction --quick --lock-tables=fal
 
 mysql -h bbcl-product-prod.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_prod < /tmp/product_db.sql
 
-mysqldump -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_dev --single-transaction --quick --lock-tables=false > /tmp/output.sql
+mysqldump -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_dev --single-transaction --quick --lock-tables=false > ~/Downloads/product_dev.sql
 scp /tmp/output.sql frank1.basebone.com:/tmp/
 mysql -h 10.0.3.40 product_prod < /tmp/output.sql
 
@@ -17,4 +17,4 @@ mysql -h bbcl-system-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u ad
 mysqldump admin_archive hoot_postback_temp --no-create-info --single-transaction --quick --lock-tables=false > /tmp/hoot_postback_temp.sql
 
 
-mysql -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_dev < /tmp/product_dev.sql
+mysql -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_dev < product_dev.sql

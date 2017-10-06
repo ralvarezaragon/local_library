@@ -7,6 +7,9 @@ CREATE TABLE `billing` (
   `last_billing_success` int(11) NOT NULL DEFAULT '0',
   `messages_per_month` int(11) NOT NULL DEFAULT '0',
   `bucket` int(11) NOT NULL DEFAULT '0',
+  `counter` int(11) NOT NULL,
+  `next_reset` int(11) NOT NULL,
+  `billed` tinyint(4) NOT NULL DEFAULT '0'
   PRIMARY KEY(`billing_id`)  
 ) ENGINE=InnoDB AUTO_INCREMENT=68931965 DEFAULT CHARSET=latin1;
 

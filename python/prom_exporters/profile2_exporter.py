@@ -5,7 +5,7 @@ import subprocess as sub
 import logging
 
 
-def parse_ip(par):
+def map_ip(par):
 	switcher = {
     "10.0.3.1": "hopper",
 		"10.0.3.21": "hopper1",
@@ -59,7 +59,7 @@ for line in iter(p.stdout.readline, b''):
     except Exception as e:
       err = 1
     try:
-      query['target'] = parse_ip(row_substr.group(6))
+      query['target'] = map_ip(row_substr.group(6))
     except Exception as e:
       err = 1
     try:
@@ -88,7 +88,7 @@ for line in iter(p.stdout.readline, b''):
     else:
       logging.error("%s", str(line))
 
-  if line.find('MYSQL_PHP PRODUCT') > -1:
+  if line.find('MYSQL_PHP PRODUCT') > -1 or line.find('MYSQL_PHP BXP') > -1:
     #print line
     err = 0
     query = dict()
@@ -106,7 +106,7 @@ for line in iter(p.stdout.readline, b''):
     except Exception as e:
       err = 1
     try:
-      query['target'] = parse_ip(row_substr.group(6))
+      query['target'] = map_ip(row_substr.group(6))
     except Exception as e:
       err = 1
     try:
@@ -127,7 +127,7 @@ for line in iter(p.stdout.readline, b''):
         module = query['module'],
         query_type = query['type']
       ).inc()
-    else: 
+    else:
       logging.error("%s", str(line))
 
 
