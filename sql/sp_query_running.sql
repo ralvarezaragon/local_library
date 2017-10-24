@@ -1,7 +1,7 @@
--- call admin_resources.sp_query_running(0, 0, "");
+-- call admin_resources.sp_query_running(0, 1, "");
 -- Parameters:
 -- * sleep: define if sleeping connectiosn should be shown. 0 no, 1 yes
--- * running_time filter in time_ms column. Specify filer in ms
+-- * running_time filter in time_ms column. Specify filer in ms (using 1ms the sp itself gets out of ecuation)
 -- * obj_filer. Use it case you want to filter only by a given table or DB name. "" means no filter
 
 DROP PROCEDURE IF EXISTS sp_query_running;

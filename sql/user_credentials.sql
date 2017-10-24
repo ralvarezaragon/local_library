@@ -36,6 +36,7 @@ GRANT EXECUTE ON PROCEDURE admin_resources.sp_rename_table TO 'phpmyadmin'@'10.0
 GRANT EXECUTE ON PROCEDURE admin_resources.sp_clone_table TO 'phpmyadmin'@'10.0.%';
 GRANT EXECUTE ON PROCEDURE admin_resources.sp_query_running TO 'phpmyadmin'@'10.0.%';
 
+
 ## RO
 CREATE USER 'ro'@'10.0.%' IDENTIFIED BY 'pass';
 GRANT SELECT ON *.* TO 'ro'@'10.0.%';

@@ -6,7 +6,7 @@ function msg_out {
     echo "$date::$msg"
 }
 
-declare -a exporter_list=("haproxy" "couchbase");
+declare -a exporter_list=("profile2");
 
 for exporter in "${exporter_list[@]}"; do
   active=$(ps aux |grep python | grep ${exporter})  
