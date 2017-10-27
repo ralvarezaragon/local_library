@@ -34,8 +34,12 @@ from (
 WHERE
 (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}"
 
-while read line; do
-    result_a+=("$line")
-done < <(mysql -h ${host} -e "${sql}")
+#while read line; do
+#    result_a+=("$line")
+#done < <(mysql -h ${host} -e "${sql}")
+
+for i in `mysql -h ${host} -e "${sql}"`; do
+    result_a+=($i)
+done
 
 echo $result_a
