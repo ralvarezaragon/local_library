@@ -38,6 +38,6 @@ WHERE
 #    result_a+=("$line")
 #done < <(mysql -h ${host} -e "${sql}")
 
-result_a=($(mysql -u username password -e "$query"))
+result_a=($(mysql -h ${host} -e "$query"))
 
 echo $result_a
