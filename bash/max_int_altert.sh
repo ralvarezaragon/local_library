@@ -24,6 +24,7 @@ from (
         when is_c.column_type like 'smallint(_)' then ~0 >> 49
         when is_c.column_type like 'tinyint(_) unsigned' then ~0 >> 56
         when is_c.column_type like 'tinyint(_)' then ~0 >> 57
+        else 0
     end \`max_value\`
     FROM INFORMATION_SCHEMA.TABLES is_t
     INNER JOIN INFORMATION_SCHEMA.COLUMNS is_c ON is_t.table_name = is_c.table_name
