@@ -38,6 +38,7 @@ WHERE
 #    result_a+=("$line")
 #done < <(mysql -h ${host} -e "${sql}")
 
-result_a=($(mysql -h ${host} -e "$query"))
-
-echo $result_a
+read -ra vars <<< $(mysql -h ${host} -e ${sql})
+for i in "${vars[@]}"; do
+    echo $i
+done
