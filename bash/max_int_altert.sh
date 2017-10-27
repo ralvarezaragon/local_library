@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+host=$1
+
 sql="SELECT a.*,
 (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 \`progress %\`
 from (
@@ -30,6 +32,6 @@ from (
 WHERE
 (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > 70"
 
-result=$(mysql -e "${sql}")
+result=$(mysql -h ${host} -e "${sql}")
 
 echo $result
