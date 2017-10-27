@@ -37,8 +37,8 @@ WHERE
 #while read line; do
 #    result_a+=("$line")
 #done < <(mysql -h ${host} -e "${sql}")
-
-read -ra vars <<< $(mysql -h ${host} -u ro -pinyourhonorbestofyou -e ${sql})
-for i in "${vars[@]}"; do
-    echo $i
-done
+mysql -h ${host} -u ro -pinyourhonorbestofyou -e ${sql}
+#read -ra vars <<< $()
+#for i in "${vars[@]}"; do
+#    echo $i
+#done
