@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 host=$1
-threshold=20
+threshold=60
 
 sql="SELECT a.*,
 (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 \`progress %\`
