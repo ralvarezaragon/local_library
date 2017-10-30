@@ -3,7 +3,6 @@
 threshold=60
 declare -a host_list=("10.0.3.21" "10.0.3.51" "10.0.3.31" "10.0.3.41");
 
-output=$(
 for host in "${host_list[@]}"; do
     sql="SELECT '${host}' as \`host\`,
         a.*,
@@ -36,8 +35,8 @@ for host in "${host_list[@]}"; do
         ) a
         WHERE
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}"
-    mysql -h ${host} -u ro -pinyourhonorbestofyou -e "${sql}"
-done)
+    output=$({mysql -h ${host} -u ro -pinyourhonorbestofyou -e "${sql}"} | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
+done
 
-echo $output
+
 #| mail -s "[$hostname]Mysql slow queries" luchiana@basebone.com,juana@basebone.com,alex@basebone.com,rafael.alvarez@basebone.com
