@@ -2,7 +2,6 @@
 
 host=$1
 threshold=20
-result_a=();
 
 sql="SELECT a.*,
 (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 \`progress %\`
