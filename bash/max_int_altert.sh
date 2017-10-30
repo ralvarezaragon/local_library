@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 threshold=60
-declare -a node_list=("10.0.3.21" "10.0.3.51" "10.0.3.31" "10.0.3.41");
+token=xoxp-6464887266-108274455602-152033069333-f0e536696010a17ec88f4df94321b6bc
 
-for node in "${node_list[@]}"; do
+for node in {'10.0.3.21','10.0.3.50','10.0.3.40','10.0.3.30'};do
     output=$({
         echo "SELECT '${node}' as \`host\`,
         a.*,
@@ -36,11 +36,28 @@ for node in "${node_list[@]}"; do
         ) a
         WHERE
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}" > /tmp/query.txt
-        mysql -h ${node} -u ro -pinyourhonorbestofyou < /tmp/query.txt
+        mysql -h ${node} < /tmp/query.txt
         rm /tmp/query.txt
-    } | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}')
-    #output=$({mysql -h $host -u ro -pinyourhonorbestofyou -e "$sql"} | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
+    } | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
+
+    case ${node} in
+        '10.0.3.21')
+            node_name="hopper";;
+        '10.0.3.50')
+            node_name="stats";;
+        '10.0.3.40')
+            node_name="frank";;
+        '10.0.3.20')
+            node_name="fargo";;
+    esac
+
+    title="Incrementals above ${threshold}% fo limit in ${node_name}"
+    escapedText=$(echo $output | sed 's/"/\"/g' | sed "s/'/\'/g" )
+
+    curl -F content="${output}" \
+        -F token=${token} \
+        -F filetype=shell \
+        -F channels=\#dba-utils \
+        -F title="${title}" \
+        https://slack.com/api/files.upload
 done
-
-
-#| mail -s "[$hostname]Mysql slow queries" luchiana@basebone.com,juana@basebone.com,alex@basebone.com,rafael.alvarez@basebone.com
