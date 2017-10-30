@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-threshold=60
+threshold=20
 token=xoxp-6464887266-108274455602-152033069333-f0e536696010a17ec88f4df94321b6bc
 
 for node in {'10.0.3.21','10.0.3.50','10.0.3.40','10.0.3.30'};do
@@ -38,7 +38,7 @@ for node in {'10.0.3.21','10.0.3.50','10.0.3.40','10.0.3.30'};do
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}" > /tmp/query.txt
         mysql -h ${node} < /tmp/query.txt
         rm /tmp/query.txt
-    } | awk '{ printf "%-40s %-5s\n", $1, $2}') 2>&1 > /dev/null
+    } | awk '{ printf "%-50s %-5s\n", $1, $2}') 2>&1 > /dev/null
 
     case ${node} in
         '10.0.3.21')
