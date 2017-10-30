@@ -3,7 +3,8 @@
 threshold=60
 declare -a host_list=("10.0.3.21" "10.0.3.51" "10.0.3.31" "10.0.3.41");
 
-sql="SELECT a.*,
+sql="SELECT '${host}' as \`host\`,
+a.*,
 (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 \`progress %\`
 from (
     SELECT
