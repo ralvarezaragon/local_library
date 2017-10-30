@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 threshold=60
-declare -a host_list=("10.0.3.21" "10.0.3.51" "10.0.3.31" "10.0.3.41");
+declare -a node_list=("10.0.3.21" "10.0.3.51" "10.0.3.31" "10.0.3.41");
 
-for host in "${host_list[@]}"; do
-    sql="SELECT '${host}' as \`host\`,
+for node in "${node_list[@]}"; do
+    output=$({
+        echo "SELECT '${node}' as \`host\`,
         a.*,
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 \`progress %\`
         from (
@@ -34,8 +35,11 @@ for host in "${host_list[@]}"; do
             and is_t.table_schema not like '%users%'
         ) a
         WHERE
-        (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}"
-    output=$({mysql -h ${host} -u ro -pinyourhonorbestofyou -e "${sql}"} | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
+        (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}" > /tmp/query.txt
+        mysql -h ${node} < /tmp/query.txt
+        rm /tmp/query.txt
+    } | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 
+    #output=$({mysql -h $host -u ro -pinyourhonorbestofyou -e "$sql"} | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
 done
 
 
