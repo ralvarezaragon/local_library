@@ -36,9 +36,9 @@ for node in "${node_list[@]}"; do
         ) a
         WHERE
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}" > /tmp/query.txt
-        mysql -h ${node} < /tmp/query.txt
+        mysql -h ${node} -u ro -pinyourhonorbestofyou < /tmp/query.txt
         rm /tmp/query.txt
-    } | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 
+    } | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}')
     #output=$({mysql -h $host -u ro -pinyourhonorbestofyou -e "$sql"} | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
 done
 
