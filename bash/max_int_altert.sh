@@ -35,5 +35,5 @@ for host in "${host_list[@]}"; do
         ) a
         WHERE
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}"
-    mysql -h ${host} -u ro -pinyourhonorbestofyou -e "${sql}"
+    mysql -h ${host} -e "${sql}"
 done
