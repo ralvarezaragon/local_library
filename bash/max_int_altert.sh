@@ -38,7 +38,7 @@ for node in {'10.0.3.21','10.0.3.50','10.0.3.40','10.0.3.30'};do
         (round(((a.max_value - a.auto_increment) / a.max_value)-1, 2)*100)*-1 > ${threshold}" > /tmp/query.txt
         mysql -h ${node} < /tmp/query.txt
         rm /tmp/query.txt
-    } | awk '{ printf "%-25s %-35s %-10s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
+    } | awk '{ printf "%-10s %-15s %-20s %-10s\n", $1, $2, $3, $4}') 2>&1 > /dev/null
 
     case ${node} in
         '10.0.3.21')
