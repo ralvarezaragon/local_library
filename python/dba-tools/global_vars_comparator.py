@@ -39,36 +39,16 @@ def exception_handler(error, q):
   logging.error("%s", error)  
   if q == 'y':
     sys.exit()
-    
-    
-def get_user_list(c):
+ 
+
+def get_global_vars_list(c):
   conn = open_mysql_conn(c)
   cur = conn.cursor()
-  cur.execute("""SELECT concat(u.user, '@', u.host) as 'full_user', GROUP_CONCAT(privilege_type SEPARATOR ', ') as 'privileges', max(is_grantable) as 'grant'
-              FROM mysql.user u
-              LEFT JOIN information_schema.user_privileges up ON concat(u.user, '@', u.host) = replace(up.grantee, \"'\", \"\")
-              GROUP BY user, host
-  """)
+  cur.execute("""SHOW GLOBAL VARIABLES""")
   res = cur.fetchall()
   conn.close()
   return res
 
-
-def show_user_list(config):
-  conn = dict()
-  for host in config["connections"][opt.cluster]['nodes']:
-    conn['host'] = host
-    conn['user'] = config['credentials']['user']
-    conn['pass'] = config['credentials']['pass']
-    print "========================== {0} ========================".format(host)
-    user_list =  get_user_list(conn)
-    for user in user_list:
-      print "Username: {0}".format(user[0])      
-      print "Privileges: {0}".format(user[1])
-      print "Grant option: {0}".format(user[2])
-      print "++++++++++++++++++++++++++++++++++++++++"
-      
-      
 today = datetime.date.today()
 logging.basicConfig(
   format="%(asctime)s::%(filename)s::%(levelname)s::%(message)s",
@@ -84,14 +64,8 @@ except Exception as e:
     exception_handler(e, 'y')
     
 if __name__ == '__main__':
-  # Load the menu
-  try:
-    opt = option_menu()
-  except Exception as e:     
-    exception_handler(e, 'y')
-  # Get the list of mysql users with privileges
-  if opt.option == "show":
-    try:
-      show_user_list(config)      
-    except Exception as e:     
-      exception_handler(e, 'y')
+  conn = dict()
+  conn['host'] = config['connections']['frank']['nodes'][0]
+  conn['user'] = config['credentials']['user']
+  conn['pass'] = config['credentials']['pass']
+  print get_global_vars_list(conn)

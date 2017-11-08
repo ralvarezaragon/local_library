@@ -3,3 +3,4 @@
 *.conf
 config*
 *.csv
+user_credentials.sql
