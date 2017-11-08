@@ -68,4 +68,4 @@ if __name__ == '__main__':
   conn['host'] = config['connections']['frank']['nodes'][0]
   conn['user'] = config['credentials']['user']
   conn['pass'] = config['credentials']['pass']
-  print get_global_vars_list(conn)
+  print get_global_vars_list(conn[2])
