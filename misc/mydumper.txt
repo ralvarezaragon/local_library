@@ -1,9 +1,9 @@
 time ./mydumper/mydumper \
-	--host=10.0.1.82 \
+	--host=10.0.3.22 \
 	--user=admin \
 	--password=wastinglightdearrosemary \
-	--database=esme_statistics_monthly \
-	--tables-list=pnl_yearly_total_regen \
+	--database=esme_apps \
+	--tables-list=inboundcache \
 	--chunk-filesize=50 \
 	--no-locks \
 	--trx-consistency-only \
@@ -11,13 +11,14 @@ time ./mydumper/mydumper \
 	--use-savepoints \
 	--threads=2 \
 	--verbose=3 \
-	--outputdir='/tmp/out_pnl'
+	--outputdir='/tmp/inboundcache'
 
 time ./mydumper/myloader \
-  --host=10.0.1.102 \
-  --user=root \
-  --password=letmeinbro \
-  --directory=/$DB_DUMP/tmp/out_stats \
+  --host=10.0.8.51 \
+  --user=admin \
+  --password=wastinglightdearrosemary \
+  --database=esme_limits \
+  --directory=/tmp/inboundcache \
   --queries-per-transaction=50000 \
   --threads=3 \
   --enable-binlog=1 \

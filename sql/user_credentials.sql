@@ -66,6 +66,11 @@ GRANT PROCESS ON *.* TO 'clustercheckuser'@'localhost' IDENTIFIED BY 'clusterche
 CREATE USER 'collectd'@'10.0.%' IDENTIFIED BY 'onebyonecomeback';
 GRANT USAGE ON *.* TO 'collectd'@'10.0.%';
 GRANT SELECT, PROCESS, REPLICATION CLIENT ON *.* TO 'collectd'@'10.0.%';
+
+## TUNNEL USER
+CREATE USER 'tunnel'@'%' IDENTIFIED BY 'concreteandgoldrun';
+GRANT USAGE ON *.* TO 'tunnel'@'%';
+GRANT SELECT, INSERT, DELETE, UPDATE, PROCESS, REPLICATION CLIENT ON *.* TO 'tunnel'@'%';
 ################
 # SYS ACCOUNTS #
 ################

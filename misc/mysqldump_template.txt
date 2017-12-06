@@ -18,3 +18,5 @@ mysqldump admin_archive hoot_postback_temp --no-create-info --single-transaction
 
 
 mysql -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u admin -p5jcKQQkD product_dev < product_dev.sql
+
+mysqldump esme_messaging delay --single-transaction --quick --lock-tables=false > /tmp/delay.sql

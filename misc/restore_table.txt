@@ -3,3 +3,6 @@
 - Move the ibd file
 - Ensure permissions
 - ALTER TABLE fixedcosts IMPORT TABLESPACE LOCK=NONE;
+
+
+mv /tmp/subscriptions.ibd /var/lib/mysql/users_lucidio/

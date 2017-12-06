@@ -1,0 +1,52 @@
+0.- Count hopper table
+select count(*) from esme_messaging.reminders_completed;
+
+1.- Check if INSERTS happening in hydra
+Hopper shouldn't ahve more than 50261971
+
+2.- Stop daemon
+root@hydra-app3:/home/luchiana# esme reminders stop
+
+3.- Export data
+time ./mydumper/mydumper \
+	--host=10.0.3.22 \
+	--user=admin \
+	--password=wastinglightdearrosemary \
+	--database=esme_messaging \
+	--tables-list=reminders_completed \
+	--chunk-filesize=50 \
+	--no-locks \
+	--trx-consistency-only \
+	--less-locking  \
+	--use-savepoints \
+	--threads=3 \
+	--verbose=3 \
+	--outputdir='/tmp/reminders_completed'
+
+4.- copy to hydra
+scp -R -i /remote/.ssh/id_rsa /tmp/reminders_completed sshsync@hydra-db2.basebone.com:/tmp/
+
+5.- restore to esme_messaging
+time ./mydumper/myloader \
+  --host=10.0.8.51 \
+  --user=admin \
+  --password=wastinglightdearrosemary \
+  --directory=/tmp/reminders_completed \
+  --queries-per-transaction=50000 \
+  --threads=10 \
+  --enable-binlog=1 \
+  --compress-protocol \
+  --verbose=3
+
+6.- Rename tables
+rename table esme_reminders.reminders_completed to esme_reminders.reminders_completed_old;
+rename table esme_messaging.reminders_completed to esme_reminders.reminders_completed;
+
+7.- Insert the old records
+insert into esme_reminders.reminders_completed select * from esme_reminders.reminders_completed_old;
+
+8.- Start the daemon
+root@hydra-app3:/home/luchiana# esme reminders start
+
+hopper -> 50261971
+hydra -> 

@@ -3,16 +3,9 @@
 # List the kernel not being used currently
     dpkg --list 'linux-image*' | grep ^ii | grep -v $(uname -r)
 # Try this option to remove old kernels
-    apt-get remove linux-image-VERSION
-# IF REVIOUS FAILES remove all the kernel are nto being used
-    rm -rf /boot/*-4.4.0-{47,64,66,70,71,72,75}-*
-# force apt to refresh repos and purge old (just in case)    
+    apt-get purge linux-image-VERSION
+# IF PREVIOUS STEP FAILS remove all the kernel are nto being used
+    rm -rf /boot/*-4.4.0-{75,79}-*
+# force apt to refresh repos and purge old (just in case)
     apt-get -f install
-    apt-get purge -y linux-image-4.4.0-47-generic
-    apt-get purge -y linux-image-4.4.0-64-generic
-    apt-get purge -y linux-image-4.4.0-66-generic
-    apt-get purge -y linux-image-4.4.0-70-generic
-    apt-get purge -y linux-image-4.4.0-71-generic
-    apt-get purge -y linux-image-4.4.0-72-generic
-    apt-get purge -y linux-image-4.4.0-75-generic
     apt-get autoremove -y

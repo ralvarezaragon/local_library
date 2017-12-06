@@ -8,3 +8,5 @@ FROM information_schema.TABLES
 WHERE TABLE_TYPE='BASE TABLE'
 and (table_name = 'blocked_affiliate' or table_name = 'deviceatlas')
 
+
+
