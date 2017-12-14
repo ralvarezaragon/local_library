@@ -41,7 +41,7 @@ GRANT EXECUTE ON PROCEDURE admin_resources.sp_query_running TO 'phpmyadmin'@'10.
 CREATE USER 'ro'@'10.0.%' IDENTIFIED BY 'inyourhonorbestofyou';
 GRANT SELECT ON *.* TO 'ro'@'10.0.%';
 
-## CRON 
+## CRON
 CREATE USER 'cron'@'10.0.%' IDENTIFIED BY 'inyourhonornowayback';
 GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'cron'@'10.0.%';
 
@@ -69,8 +69,7 @@ GRANT SELECT, PROCESS, REPLICATION CLIENT ON *.* TO 'collectd'@'10.0.%';
 
 ## TUNNEL USER
 CREATE USER 'tunnel'@'%' IDENTIFIED BY 'concreteandgoldrun';
-GRANT USAGE ON *.* TO 'tunnel'@'%';
-GRANT SELECT, INSERT, DELETE, UPDATE, PROCESS, REPLICATION CLIENT ON *.* TO 'tunnel'@'%';
+GRANT SELECT ON *.* TO 'tunnel'@'%';
 ################
 # SYS ACCOUNTS #
 ################
