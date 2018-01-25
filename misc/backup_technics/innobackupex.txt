@@ -1,0 +1,65 @@
+innobackupex --user=nobody --galera-info --include='esme_subscription.unsubscription_log' --use-memory=4G /tmp/unsubscription_log
+
+scp -r -i /remote/.ssh/id_rsa /tmp/signup_log sshsync@hydra-db2.basebone.com:/tmp/
+
+innobackupex --apply-log --export /tmp/signup_log
+
+# create database tempdb
+
+# create table signup_log
+    CREATE TABLE `signup_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `msisdn` bigint(20) NOT NULL DEFAULT '0',
+  `company` int(11) NOT NULL DEFAULT '0',
+  `product` int(11) NOT NULL DEFAULT '0',
+  `country` int(11) NOT NULL DEFAULT '0',
+  `endpoint` int(11) NOT NULL DEFAULT '0',
+  `network` int(11) NOT NULL DEFAULT '0',
+  `application` int(11) NOT NULL DEFAULT '0',
+  `service` int(11) NOT NULL DEFAULT '0',
+  `ported` int(11) NOT NULL DEFAULT '0',
+  `signup_day` date DEFAULT NULL,
+  `reminder_stamp` int(11) NOT NULL DEFAULT '0',
+  `signup_time` datetime DEFAULT NULL,
+  `monthstamp` int(11) NOT NULL DEFAULT '0',
+  `daystamp` int(11) NOT NULL DEFAULT '0',
+  `keyword` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `mtn` int(11) NOT NULL DEFAULT '0',
+  `pin` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `password` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
+  `campaign` int(11) NOT NULL DEFAULT '0',
+  `project` int(11) NOT NULL DEFAULT '3',
+  `text_container_id` int(11) NOT NULL DEFAULT '0',
+  `meta_type` int(11) NOT NULL DEFAULT '0',
+  `meta_id` int(11) NOT NULL DEFAULT '0',
+  `counter` int(11) NOT NULL DEFAULT '1',
+  `billed` tinyint(4) NOT NULL DEFAULT '1',
+  `tokens` int(11) NOT NULL DEFAULT '0',
+  `tokens2` int(11) NOT NULL DEFAULT '0',
+  `doubleoptin` tinyint(4) NOT NULL DEFAULT '1',
+  `billing_attempts` int(11) NOT NULL DEFAULT '0',
+  `billing_successes` int(11) NOT NULL DEFAULT '0',
+  `last_billing_attempt` int(11) NOT NULL DEFAULT '0',
+  `last_billing_success` int(11) NOT NULL DEFAULT '0',
+  `messages_per_month` int(11) NOT NULL DEFAULT '0',
+  `plan_original` int(11) NOT NULL DEFAULT '0',
+  `plan_current` int(11) NOT NULL DEFAULT '0',
+  `domain_id` int(11) NOT NULL DEFAULT '0',
+  `domain` varchar(50) DEFAULT '',
+  `publisher` int(11) NOT NULL DEFAULT '0',
+  `affiliate` int(11) NOT NULL DEFAULT '0',
+  `added_to_db` set('yes','no') NOT NULL DEFAULT 'no',
+  `original_message_id` bigint(20) NOT NULL DEFAULT '0',
+  `processed_as_unique` enum('yes','no') NOT NULL DEFAULT 'no',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `signup_day` (`signup_day`) USING BTREE,
+  KEY `pnl` (`monthstamp`,`project`,`meta_id`,`signup_day`) USING BTREE,
+  KEY `country` (`country`,`signup_day`,`project`) USING BTREE,
+  KEY `msisdn` (`msisdn`,`signup_day`,`project`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=68707560 DEFAULT CHARSET=latin1;
+
+# alter table signup_log discard tablespace;
+# cd /var/lib/mysql/tempdb
+# chown mysql:mysql signup_log.ibd
+# alter table signup_log import tablespace;
+# insert into tempdb.signup_log select * from esme_subscription_history.signup_log;

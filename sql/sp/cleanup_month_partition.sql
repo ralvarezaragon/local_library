@@ -1,8 +1,8 @@
 -- CREATE ONLY IN admin_resources;
--- call test.cleanup_month_partition('test', 'partition_test', 3);
+-- call admin_resources.sp_cleanup_month_partition('test', 'partition_test', 3);
 -- This sp will truncate every partition older than 3, for instances
 -- Use it only for month partitions p1...p12!!!
-CREATE DEFINER=`root`@`localhost` PROCEDURE `cleanup_month_partition`(
+CREATE DEFINER=`admin`@`10.0.%` PROCEDURE `sp_cleanup_month_partition`(
  dbname varchar(255),
  tname varchar(255),
  to_truncate int(1)

@@ -1,8 +1,10 @@
-- Create the table (empty)
+- Uncompress backup
+- Prepare backup
+innobackupex --apply-log --export /path/to/partial/backup
+- Create the table schema
 - ALTER TABLE fixedcosts DISCARD TABLESPACE;
 - Move the ibd file
 - Ensure permissions
 - ALTER TABLE fixedcosts IMPORT TABLESPACE LOCK=NONE;
 
 
-mv /tmp/subscriptions.ibd /var/lib/mysql/users_lucidio/

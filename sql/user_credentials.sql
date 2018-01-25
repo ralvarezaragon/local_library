@@ -21,6 +21,10 @@ GRANT DROP ON esme_live.* TO 'app_php'@'10.0.%';
 GRANT DROP ON esme_stacks.* TO 'app_php'@'10.0.%';
 GRANT DROP ON esme_queue.* TO 'app_php'@'10.0.%';
 
+## APP_PYTHON
+CREATE USER 'app_python'@'10.0.%' IDENTIFIED BY 'concreteandgoldladeeda';
+GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'app_python'@'10.0.%';
+
 ## APP_JAVA 
 CREATE USER 'app_java'@'10.0.%' IDENTIFIED BY 'thecolourandtheshapenewwayhome';
 GRANT SELECT,DELETE,UPDATE,INSERT,CREATE ON *.* TO 'app_java'@'10.0.%';

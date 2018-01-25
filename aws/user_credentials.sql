@@ -4,19 +4,19 @@ GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%';
 
 ## DEV 
 #CREATE USER 'dev'@'%' IDENTIFIED BY '';
-#GRANT SELECT,DELETE,UPDATE,INSERT,CREATE ON *.* TO 'dev'@'10.0.%';
+#GRANT SELECT,DELETE,UPDATE,INSERT ON *.* TO 'dev'@'10.0.%';
 #GRANT CREATE,DROP ON `user\_%`.* TO 'dev'@'10.0.%';
 
 ## APP_PHP 
-#CREATE USER 'app_php'@'%' IDENTIFIED BY '';
-#GRANT SELECT,DELETE,UPDATE,INSERT,CREATE  ON *.* TO 'app_php'@'10.0.%';
+#CREATE USER 'app_php'@'%' IDENTIFIED BY 'thecolourandtheshapemyhero';
+#GRANT SELECT,DELETE,UPDATE,INSERT,CREATE,DROP  ON *.* TO 'app_php'@'10.0.%';
 
 ## APP_JAVA 
 #CREATE USER 'app_java'@'%' IDENTIFIED BY '';
 #GRANT SELECT,DELETE,UPDATE,INSERT,CREATE  ON *.* TO 'app_java'@'10.0.%';
 
 ## READ ONLY 
-CREATE USER 'ro'@'%' IDENTIFIED BY '';
+CREATE USER 'ro'@'%' IDENTIFIED BY 'inyourhonorbestofyou';
 GRANT SELECT ON *.* TO 'ro'@'%';
 
 ## CRON 

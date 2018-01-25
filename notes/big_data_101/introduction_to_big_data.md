@@ -1,4 +1,4 @@
-### Introduction to big data
+![data_science_process](data_science_process.png)
 - It's relative. What's big data today probably is not in 5 years
 - It's whenever the resources you have are not enough to process the data you have
 - Can be considered as digital trace that we leave behind in our daily use
