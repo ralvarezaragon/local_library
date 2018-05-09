@@ -1,7 +1,9 @@
-SELECT *
+SELECT table_schema as `dbname`, 
+table_name AS `table`,
+round(((data_length + index_length) / 1024 / 1024), 2) `Size in MB`
 FROM information_schema.TABLES
 WHERE TABLE_TYPE='BASE TABLE'
-and  table_name='mesh_emirates_tanla';
+and  table_schema='esme_numbers';
 
 
 

@@ -71,6 +71,13 @@ CREATE USER 'collectd'@'10.0.%' IDENTIFIED BY '';
 GRANT USAGE ON *.* TO 'collectd'@'10.0.%';
 GRANT SELECT, PROCESS, REPLICATION CLIENT ON *.* TO 'collectd'@'10.0.%';
 
+
+## MONITORING
+CREATE USER 'collectd'@'localhost' IDENTIFIED BY '';
+GRANT USAGE ON *.* TO 'collectd'@'localhost';
+GRANT SELECT, PROCESS, REPLICATION CLIENT ON *.* TO 'collectd'@'localhost';
+
+
 ## TUNNEL USER
 CREATE USER 'tunnel'@'%' IDENTIFIED BY '';
 GRANT SELECT ON *.* TO 'tunnel'@'%';

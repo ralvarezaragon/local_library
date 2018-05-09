@@ -1,34 +1,25 @@
-https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dw-bi-lifecycle-method/
-
-
 time ./mydumper/mydumper \
 --host=10.0.3.51 \
---user=admin \
---password=wastinglightdearrosemary \
+--user=nobody \
 --chunk-filesize=50 \
 --no-locks \
+--database=ads_server_322 \
 --trx-consistency-only \
 --less-locking \
 --use-savepoints \
 --threads=5 \
 --verbose=3 \
---outputdir='/tmp/ads_tracking'
+--outputdir='/tmp/ads_server_322'
 
 
 
 time ./mydumper/myloader \
-  --host=10.0.8.51 \
+  --host=52.31.17.59 \
   --user=admin \
   --password=wastinglightdearrosemary \
-  --directory=/tmp/migrations/signup_log \
+  --database=ads_server_322 \
+  --directory=/tmp/ads_server_322 \
   --queries-per-transaction=50000 \
-  --threads=10 \
+  --threads=5 \
   --enable-binlog=1 \
-  --compress-protocol \
-  --verbose=3
-
-
-
-
-  --database=esme_virtuals \
-./import_files_loop.sh -h 10.0.3.5 -d esme_statistics_monthly -f out_pnl -s 10
+  --compress-protocol

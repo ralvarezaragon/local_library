@@ -21,3 +21,7 @@ mysql -h bbcl-product-test.cluster-ccdpsuzchse8.eu-west-1.rds.amazonaws.com -u a
 
 time mysqldump esme_reports tech_stats_2017 --single-transaction --quick --lock-tables=false > /tmp/tech_stats_2017.sql
 time mysqldump esme_reports tech_stats_2018 --single-transaction --quick --lock-tables=false > /tmp/tech_stats_2018.sql
+
+
+mysqldump users_lucidio templates constant_unique_customers_2018-04-01 --single-transaction --quick --lock-tables=false > /tmp/unique_customers_20180416.sql
+mysqldump users_lucidio templates constant_unique_customers_2018-04-01 --single-transaction --quick --lock-tables=false > /tmp/unique_customers_20180416.sql
